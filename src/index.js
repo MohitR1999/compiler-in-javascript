@@ -11,9 +11,10 @@ if (!process.argv[2]) {
 
 const inputFile = process.argv[2];
 
-// Read the input file synchronously
 try {
+    // Read the input file synchronously
     const data = fs.readFileSync(inputFile, 'utf-8');
+    // get all the tokens in the source code
     let tokens = tokenizer(data);
     console.log(tokens);
 } catch (err) {
