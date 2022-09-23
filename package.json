@@ -1,0 +1,17 @@
+{
+  "name": "compiler-in-javascript",
+  "version": "1.0.0",
+  "description": "A C/C++ compiler written in javascript",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "javascript",
+    "compiler",
+    "compiler",
+    "design"
+  ],
+  "author": "Mohit Ranjan",
+  "license": "ISC"
+}
