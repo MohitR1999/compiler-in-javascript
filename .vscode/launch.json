@@ -12,7 +12,7 @@
                 "<node_internals>/**"
             ],
             "program": "${workspaceFolder}/src/index.js",
-            "args": ["${workspaceFolder}/input/invalid/test5.c"]
+            "args": ["${workspaceFolder}/input/stage_2/valid/nested_ops.c"]
         }
     ]
 }

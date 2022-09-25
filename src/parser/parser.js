@@ -38,13 +38,19 @@ function parseExpression(tokens, indexObject) {
     let token = tokens[indexObject.value];
     if (!token) {
         console.log('Unexpected end of input.');
-        exit();
-    } else if (token.tokenType != TokenTypes.INTEGER_LITERAL) {
-        console.log('Syntax error, wrong value seen');
-        exit();
-    } else {
+        exit(1);
+    } 
+    // if it is a integer literal, return constant node
+    else if (token.tokenType == TokenTypes.INTEGER_LITERAL) {
         indexObject.value++;
         return new Node(TokenTypes.INTEGER_LITERAL, token.value, []);
+    } 
+    // check if it is a unary operator
+    else if (token.tokenType == TokenTypes.NEGATION || token.tokenType == TokenTypes.BITWISE_COMPLEMENT || token.tokenType == TokenTypes.LOGICAL_NEGATION) {
+        let operatorNode = new Node(token.tokenType, token.value, []);
+        indexObject.value++;
+        let innerExpression = parseExpression(tokens, indexObject);
+        return new Node(operatorNode.type, operatorNode.value, [innerExpression]);
     }
 }
 
@@ -58,20 +64,17 @@ function parseStatement(tokens, indexObject) {
     let token = tokens[indexObject.value];
     if (!token) {
         console.log('Unexpected end of input. Exiting');
-        exit();
+        exit(1);
     } else if (token.tokenType != TokenTypes.RETURN_KEYWORD) {
         console.log('Error while parsing statement. Expected return statement');
-        exit();
+        exit(1);
     } else {
         // Return keyword was found, hence next we should have an integer
         indexObject.value++;
         token = tokens[indexObject.value];
         if (!token) {
             console.log('Unexpected end of input. Exiting');
-            exit();
-        } else if (token.tokenType != TokenTypes.INTEGER_LITERAL) {
-            console.log('Error while parsing. Expected an integer literal');
-            exit();
+            exit(1);
         } else {
             // This would return the expression AND it would increment
             // the current index
@@ -82,10 +85,10 @@ function parseStatement(tokens, indexObject) {
             token = tokens[indexObject.value];
             if (!token) {
                 console.log('Unexpected end of input. Exiting');
-                exit();
+                exit(1);
             } else if (token.tokenType != TokenTypes.SEMICOLON) {
                 console.log('Syntax Error, expected a semicolon. Exiting');
-                exit();
+                exit(1);
             } else {
                 indexObject.value++;
                 return statement;
@@ -106,12 +109,12 @@ function parseFunction(tokens, indexObject) {
     if (!token) {
         // Unexpected end of input
         console.log('Unexpected end of input. Exiting');
-        exit();
+        exit(1);
     }
     else if (token.tokenType != TokenTypes.INT_KEYWORD) {
         // int return type not found
         console.log('Error while parsing, expected return type int. Exiting');
-        exit();
+        exit(1);
     } else {
         // int return type found, now proceeding ahead
         indexObject.value++;
@@ -119,11 +122,11 @@ function parseFunction(tokens, indexObject) {
         if (!token) {
             // Unexpected end of input
             console.log('Unexpected end of input. Exiting');
-            exit();
+            exit(1);
         } else if (token.tokenType != TokenTypes.IDENTIFIER) {
             // Identifier not found
             console.log('Error while parsing, expected a function name. Exiting');
-            exit();
+            exit(1);
         } else {
             // Identifier found, proceeding ahead
             functionName = token.value;
@@ -132,11 +135,11 @@ function parseFunction(tokens, indexObject) {
             if (!token) {
                 // Unexpected end of input
                 console.log('Unexpected end of input. Exiting');
-                exit();
+                exit(1);
             } else if (token.tokenType != TokenTypes.OPEN_PARENTHESES) {
                 // Open parentheses not found
                 console.log('Error while parsing, expected an opening parentheses (. Exiting');
-                exit();
+                exit(1);
             } else {
                 // Opening parentheses found, proceeding ahead
                 indexObject.value++;
@@ -144,11 +147,11 @@ function parseFunction(tokens, indexObject) {
                 if (!token) {
                     // Unexpected end of input
                     console.log('Unexpected end of input. Exiting');
-                    exit();
+                    exit(1);
                 } else if (token.tokenType != TokenTypes.CLOSE_PARENTHESES) {
                     // Closing parentheses not found
                     console.log('Error while parsing, expected an closing parentheses ). Exiting');
-                    exit();
+                    exit(1);
                 } else {
                     // Closing parentheses found, proceeding ahead
                     indexObject.value++;
@@ -156,11 +159,11 @@ function parseFunction(tokens, indexObject) {
                     if (!token) {
                         // Unexpected end of input
                         console.log('Unexpected end of input. Exiting');
-                        exit();
+                        exit(1);
                     } else if (token.tokenType != TokenTypes.OPEN_CURLY_BRACE) {
                         // Opening curly brace not found
                         console.log('Error while parsing, expected an opening curly brace {. Exiting');
-                        exit();
+                        exit(1);
                     } else {
                         // Opening curly brace found, proceeding ahead
                         indexObject.value++;
@@ -170,11 +173,11 @@ function parseFunction(tokens, indexObject) {
                         if (!token) {
                             // Unexpected end of input
                             console.log('Unexpected end of input. Exiting');
-                            exit();
+                            exit(1);
                         } else if (token.tokenType != TokenTypes.CLOSE_CURLY_BRACE) {
                             // Closing curly brace not found
                             console.log('Error while parsing, expected an closing curly brace }. Exiting');
-                            exit();
+                            exit(1);
                         } else {
                             let functionDeclaration = new Node(TokenTypes.FUNCTION_DECLARATION, functionName, [statement]);
                             return functionDeclaration;
@@ -189,7 +192,7 @@ function parseFunction(tokens, indexObject) {
 function parseProgram(tokens, indexObject) {
     if (!tokens || !tokens.length) {
         console.log('Unexpected end of input. Exiting');
-        exit();
+        exit(1);
     } else {
         let functionDeclaration = parseFunction(tokens, indexObject);
         let program = new Node(TokenTypes.PROGRAM, 'root', [functionDeclaration]);
