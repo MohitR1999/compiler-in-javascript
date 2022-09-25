@@ -30,7 +30,23 @@ function tokenizer(data) {
         } else if (currentCharacter == ';') {
             tokens.push(new Token(TokenTypes.SEMICOLON, currentCharacter));
             currentIndex++;
+        } 
+        // Checking for negation operator
+        else if (currentCharacter == '-') {
+            tokens.push(new Token(TokenTypes.NEGATION, currentCharacter));
+            currentIndex++;
         }
+        // Checking for bitwise complement operator
+        else if (currentCharacter == '~') {
+            tokens.push(new Token(TokenTypes.BITWISE_COMPLEMENT, currentCharacter));
+            currentIndex++;
+        }
+        // Checking for logical negation operator
+        else if (currentCharacter == '!') {
+            tokens.push(new Token(TokenTypes.LOGICAL_NEGATION, currentCharacter));
+            currentIndex++;
+        }
+
         // checking for alphanumeric symbols/variables
         else if (alphanumericRegex.test(currentCharacter)) {
             let word = '';

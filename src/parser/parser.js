@@ -8,7 +8,8 @@ const Token = require('../constants/Token');
  * Program -> Function_Declaration
  * Function_Declaration -> int function_name () { Statement }
  * Statement -> return Expression ;
- * Expression -> integer
+ * Expression -> UnaryOperator Expression | integer
+ * UnaryOperator -> - | ~ | !
  */
 
 /**
