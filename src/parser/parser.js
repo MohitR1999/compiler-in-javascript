@@ -5,46 +5,25 @@ const Token = require('../constants/Token');
  * We will be using Backus-Naur Form for specifying our grammar. 
  * All the non terminals would start with a capital letter,
  * and all the terminals would start with a small letter
- */
-
-/**
- * Class representing an expression, which is defined as follows:
+ * Program -> Function_Declaration
+ * Function_Declaration -> int function_name () { Statement }
+ * Statement -> return Expression ;
  * Expression -> integer
  */
-class Expression {
-    constructor(integerValue) {
-        this.integerValue = integerValue;
-    }
-}
 
 /**
- * Class representing a statement, defined as follows:
- * Statement -> return Expression ;
+ * Class for a node of the abstract syntax tree.
  */
-class Statement {
-    constructor(expression) {
-        this.expression = expression
-    }
-}
-
-/**
- * Class representing a function declaration, defined as follows:
- * Function_Declaration -> int function_name () { Statement }
- */
-class Function_Declaration {
-    constructor(functionName, statement) {
-        this.functionName = functionName;
-        this.statement = statement;
-    }
-}
-
-/**
- * Class representing a program, defined as follows:
- * Program -> Function_Declaration
- */
-class Program {
-    constructor(functionDeclaration) {
-        this.functionDeclaration = functionDeclaration;
+class Node {
+    /**
+     * Constructor that returns a Node
+     * @param {string} value Value of the node 
+     * @param {Node[]} children Children array of the current node
+     */
+    constructor(type, value, children) {
+        this.type = type;
+        this.value = value;
+        this.children = children;
     }
 }
 
@@ -64,7 +43,7 @@ function parseExpression(tokens, indexObject) {
         exit();
     } else {
         indexObject.value++;
-        return new Expression(token.value);
+        return new Node(TokenTypes.INTEGER_LITERAL, token.value, []);
     }
 }
 
@@ -96,7 +75,7 @@ function parseStatement(tokens, indexObject) {
             // This would return the expression AND it would increment
             // the current index
             let expression = parseExpression(tokens, indexObject);
-            let statement = new Statement(expression);
+            let statement = new Node(TokenTypes.STATEMENT, 'return', [expression]);
             // if we don't encounter a semicolon now, it means there is 
             // syntax error
             token = tokens[indexObject.value];
@@ -196,7 +175,7 @@ function parseFunction(tokens, indexObject) {
                             console.log('Error while parsing, expected an closing curly brace }. Exiting');
                             exit();
                         } else {
-                            let functionDeclaration = new Function_Declaration(functionName, statement);
+                            let functionDeclaration = new Node(TokenTypes.FUNCTION_DECLARATION, functionName, [statement]);
                             return functionDeclaration;
                         }
                     }
@@ -212,9 +191,9 @@ function parseProgram(tokens, indexObject) {
         exit();
     } else {
         let functionDeclaration = parseFunction(tokens, indexObject);
-        let program = new Program(functionDeclaration);
+        let program = new Node(TokenTypes.PROGRAM, 'root', [functionDeclaration]);
         return program;
     }
 }
 
-module.exports = parseProgram;
+module.exports.parseProgram = parseProgram;

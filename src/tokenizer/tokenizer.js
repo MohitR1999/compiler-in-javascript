@@ -11,9 +11,6 @@ function tokenizer(data) {
     let tokens = [];
     const alphanumericRegex = /[_a-zA-Z0-9]/;
     const identiferRegex = /[_a-zA-Z]\w*/;
-    const whitespaceRegex = /\s+/;
-    const intRegex = /int/;
-    const returnRegex = /return/;
     const integerLiteralRegex = /[0-9]+/;
     for (let currentIndex = 0; currentIndex < data.length;) {
         let currentCharacter = data[currentIndex];
@@ -45,9 +42,9 @@ function tokenizer(data) {
             // been advanced further, so there is no need to increment it again
             // as it could cause some characters to be skipped unncessarily
             // Check if the formed word is a reserved keyword or an identifer
-            if (intRegex.test(word)) {
+            if (word == 'int') {
                 tokens.push(new Token(TokenTypes.INT_KEYWORD, word));
-            } else if (returnRegex.test(word)) {
+            } else if (word == 'return') {
                 tokens.push(new Token(TokenTypes.RETURN_KEYWORD, word));
             } else if (identiferRegex.test(word)) {
                 tokens.push(new Token(TokenTypes.IDENTIFIER, word));

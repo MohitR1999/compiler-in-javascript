@@ -1,7 +1,8 @@
 const fs = require('fs');
 const { exit } = require('process');
 const tokenizer = require('./tokenizer/tokenizer');
-const parseProgram = require('./parser/parser');
+const { parseProgram } = require('./parser/parser');
+const codeGenerator = require('./codeGenerator/codeGenerator');
 
 // Process command line arguments here
 // Expect first argument to be path of file to be read
@@ -17,15 +18,13 @@ try {
     const data = fs.readFileSync(inputFile, 'utf-8');
     // get all the tokens in the source code
     let tokens = tokenizer(data);
-    // logging the tokens generated
-    console.log(tokens);
     // now it's time to generate AST for the program
     let indexObject = {
         value : 0
     }
     let abstractSyntaxTree = parseProgram(tokens, indexObject);
-    // logging the abstract syntax tree
-    console.log(abstractSyntaxTree);
+    // generating the code
+    codeGenerator(abstractSyntaxTree);
 } catch (err) {
     console.log(err);
 }
