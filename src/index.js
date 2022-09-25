@@ -3,6 +3,7 @@ const { exit } = require('process');
 const tokenizer = require('./tokenizer/tokenizer');
 const { parseProgram } = require('./parser/parser');
 const codeGenerator = require('./codeGenerator/codeGenerator');
+const path = require('node:path');
 
 // Process command line arguments here
 // Expect first argument to be path of file to be read
@@ -24,7 +25,8 @@ try {
     }
     let abstractSyntaxTree = parseProgram(tokens, indexObject);
     // generating the code
-    codeGenerator(abstractSyntaxTree);
+    const fileName = path.basename(inputFile).split('.')[0];
+    codeGenerator(abstractSyntaxTree, fileName);
 } catch (err) {
     console.log(err);
 }

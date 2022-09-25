@@ -51,6 +51,9 @@ function parseExpression(tokens, indexObject) {
         indexObject.value++;
         let innerExpression = parseExpression(tokens, indexObject);
         return new Node(operatorNode.type, operatorNode.value, [innerExpression]);
+    } else {
+        console.log(`Missing expression. Found ${token.value}`);
+        exit(1);
     }
 }
 

@@ -1,5 +1,6 @@
 const TokenTypes = require('../constants/tokenTypes');
 const fs = require('fs');
+const { exec } = require('child_process');
 
 /**
  * This function generates the assembly code for a particular node of AST
@@ -7,7 +8,7 @@ const fs = require('fs');
  */
 function generateAssemblyForTreeNode(treeNode) {
     if (treeNode.type == TokenTypes.INTEGER_LITERAL) {
-        let assemblyString = `\tmovl  $${treeNode.value}, %eax\n`;
+        let assemblyString = `\tmovl    $${treeNode.value}, %eax\n`;
         treeNode.assembly = assemblyString;
     } else if (treeNode.type == TokenTypes.STATEMENT) {
         if (treeNode.value == 'return') {
@@ -17,7 +18,27 @@ function generateAssemblyForTreeNode(treeNode) {
     } else if (treeNode.type == TokenTypes.FUNCTION_DECLARATION) {
         let assemblyString = `${treeNode.value}:\n` + treeNode.children[0].assembly;
         treeNode.assembly = assemblyString;
-    } else {
+    } 
+    // Code generation for Negation operator
+    else if (treeNode.type == TokenTypes.NEGATION) {
+        let assemblyString = treeNode.children[0].assembly + `\tneg     %eax\n`;
+        treeNode.assembly = assemblyString;
+    } 
+    // Code generation for Bitwise complement operator
+    else if (treeNode.type == TokenTypes.BITWISE_COMPLEMENT) {
+        let assemblyString = treeNode.children[0].assembly + `\tnot     %eax\n`;
+        treeNode.assembly = assemblyString;
+    }
+    // Code generation for logical negation operator
+    else if (treeNode.type == TokenTypes.LOGICAL_NEGATION) {
+        let assemblyString = treeNode.children[0].assembly;
+        assemblyString += `\tcmpl    $0, %eax\n`;
+        assemblyString += `\tmovl    $0, %eax\n`;
+        assemblyString += `\tsete    %al\n`;
+        treeNode.assembly = assemblyString;
+    }
+    
+    else {
         let assemblyString = `\t.globl ${treeNode.children[0].value}\n` + treeNode.children[0].assembly;
         treeNode.assembly = assemblyString;
     }
@@ -42,17 +63,26 @@ function recursiveHelper(tree, postOrderTraversalArray) {
  * @param {Object} abstractSyntaxTree The abstract syntax tree which is generated after
  * parsing the tokens
  */
-function codeGenerator(abstractSyntaxTree) {
+function codeGenerator(abstractSyntaxTree, fileName) {
     let postOrderTraversal = [];
     recursiveHelper(abstractSyntaxTree, postOrderTraversal);
     const folderName = 'output';
-    const fileName = 'out.s';
     try {
         if (!fs.existsSync(`../${folderName}`)) {
             fs.mkdirSync(`../${folderName}`);
         }
-        fs.writeFileSync(`../${folderName}/${fileName}`, abstractSyntaxTree.assembly);
-        console.log(`Output assemby code generated in ../${folderName}/${fileName}, please compile with gcc to make it executable :)`);
+        fs.writeFileSync(`../${folderName}/${fileName}.s`, abstractSyntaxTree.assembly);
+        exec(`gcc ../${folderName}/${fileName}.s -o ../${folderName}/${fileName}.out`, (error, stdout, stderr) => {
+            if (error) {
+                console.log(`error: ${error.message}`);
+                return;
+            }
+            if (stderr) {
+                console.log(`stderr: ${stderr}`);
+                return;
+            }
+            console.log(`stdout: ${stdout}`);
+        });
     } catch (err) {
         console.log(err);
     }
