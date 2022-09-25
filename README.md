@@ -1,6 +1,10 @@
 # Compiler in javascript (v1.0.0)
 This is a small, toy compiler that I've written in javascript. It's not meant to be used in production, but rather as a learning tool. I've tried to make it as simple as possible, while still being useful. It's not meant to be a full-featured compiler, but rather a small, simple compiler that can be used to learn about compiler design.
 
+What this compiler can do for now:
+- Compile a simple program consisting of only main function that returns an integer
+- Support for unary operators on the integer type is present
+
 Currently implemented features:
 - Lexical analyser: Converts the source code into a list of tokens
 - Parser: Converts the list of tokens into an abstract syntax tree
