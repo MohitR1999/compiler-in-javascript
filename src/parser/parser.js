@@ -41,12 +41,12 @@ function parseExpression(tokens, indexObject) {
         exit(1);
     } 
     // if it is a integer literal, return constant node
-    else if (token.tokenType == TokenTypes.INTEGER_LITERAL) {
+    else if (token.tokenType == TokenTypes.INTEGER_LITERAL.name) {
         indexObject.value++;
-        return new Node(TokenTypes.INTEGER_LITERAL, token.value, []);
+        return new Node(token.tokenType, token.value, []);
     } 
     // check if it is a unary operator
-    else if (token.tokenType == TokenTypes.NEGATION || token.tokenType == TokenTypes.BITWISE_COMPLEMENT || token.tokenType == TokenTypes.LOGICAL_NEGATION) {
+    else if (token.tokenType == TokenTypes.MINUS.name || token.tokenType == TokenTypes.BITWISE_COMPLEMENT.name || token.tokenType == TokenTypes.LOGICAL_NEGATION.name) {
         let operatorNode = new Node(token.tokenType, token.value, []);
         indexObject.value++;
         let innerExpression = parseExpression(tokens, indexObject);
@@ -68,7 +68,7 @@ function parseStatement(tokens, indexObject) {
     if (!token) {
         console.log('Unexpected end of input. Exiting');
         exit(1);
-    } else if (token.tokenType != TokenTypes.RETURN_KEYWORD) {
+    } else if (token.tokenType != TokenTypes.RETURN_KEYWORD.name) {
         console.log('Error while parsing statement. Expected return statement');
         exit(1);
     } else {
@@ -82,14 +82,14 @@ function parseStatement(tokens, indexObject) {
             // This would return the expression AND it would increment
             // the current index
             let expression = parseExpression(tokens, indexObject);
-            let statement = new Node(TokenTypes.STATEMENT, 'return', [expression]);
+            let statement = new Node(TokenTypes.STATEMENT.name, 'return', [expression]);
             // if we don't encounter a semicolon now, it means there is 
             // syntax error
             token = tokens[indexObject.value];
             if (!token) {
                 console.log('Unexpected end of input. Exiting');
                 exit(1);
-            } else if (token.tokenType != TokenTypes.SEMICOLON) {
+            } else if (token.tokenType != TokenTypes.SEMICOLON.name) {
                 console.log('Syntax Error, expected a semicolon. Exiting');
                 exit(1);
             } else {
@@ -114,7 +114,7 @@ function parseFunction(tokens, indexObject) {
         console.log('Unexpected end of input. Exiting');
         exit(1);
     }
-    else if (token.tokenType != TokenTypes.INT_KEYWORD) {
+    else if (token.tokenType != TokenTypes.INT_KEYWORD.name) {
         // int return type not found
         console.log('Error while parsing, expected return type int. Exiting');
         exit(1);
@@ -126,7 +126,7 @@ function parseFunction(tokens, indexObject) {
             // Unexpected end of input
             console.log('Unexpected end of input. Exiting');
             exit(1);
-        } else if (token.tokenType != TokenTypes.IDENTIFIER) {
+        } else if (token.tokenType != TokenTypes.IDENTIFIER.name) {
             // Identifier not found
             console.log('Error while parsing, expected a function name. Exiting');
             exit(1);
@@ -139,7 +139,7 @@ function parseFunction(tokens, indexObject) {
                 // Unexpected end of input
                 console.log('Unexpected end of input. Exiting');
                 exit(1);
-            } else if (token.tokenType != TokenTypes.OPEN_PARENTHESES) {
+            } else if (token.tokenType != TokenTypes.OPEN_PARENTHESES.name) {
                 // Open parentheses not found
                 console.log('Error while parsing, expected an opening parentheses (. Exiting');
                 exit(1);
@@ -151,7 +151,7 @@ function parseFunction(tokens, indexObject) {
                     // Unexpected end of input
                     console.log('Unexpected end of input. Exiting');
                     exit(1);
-                } else if (token.tokenType != TokenTypes.CLOSE_PARENTHESES) {
+                } else if (token.tokenType != TokenTypes.CLOSE_PARENTHESES.name) {
                     // Closing parentheses not found
                     console.log('Error while parsing, expected an closing parentheses ). Exiting');
                     exit(1);
@@ -163,7 +163,7 @@ function parseFunction(tokens, indexObject) {
                         // Unexpected end of input
                         console.log('Unexpected end of input. Exiting');
                         exit(1);
-                    } else if (token.tokenType != TokenTypes.OPEN_CURLY_BRACE) {
+                    } else if (token.tokenType != TokenTypes.OPEN_CURLY_BRACE.name) {
                         // Opening curly brace not found
                         console.log('Error while parsing, expected an opening curly brace {. Exiting');
                         exit(1);
@@ -177,12 +177,12 @@ function parseFunction(tokens, indexObject) {
                             // Unexpected end of input
                             console.log('Unexpected end of input. Exiting');
                             exit(1);
-                        } else if (token.tokenType != TokenTypes.CLOSE_CURLY_BRACE) {
+                        } else if (token.tokenType != TokenTypes.CLOSE_CURLY_BRACE.name) {
                             // Closing curly brace not found
                             console.log('Error while parsing, expected an closing curly brace }. Exiting');
                             exit(1);
                         } else {
-                            let functionDeclaration = new Node(TokenTypes.FUNCTION_DECLARATION, functionName, [statement]);
+                            let functionDeclaration = new Node(TokenTypes.FUNCTION_DECLARATION.name, functionName, [statement]);
                             return functionDeclaration;
                         }
                     }
@@ -198,7 +198,7 @@ function parseProgram(tokens, indexObject) {
         exit(1);
     } else {
         let functionDeclaration = parseFunction(tokens, indexObject);
-        let program = new Node(TokenTypes.PROGRAM, 'root', [functionDeclaration]);
+        let program = new Node(TokenTypes.PROGRAM.name, 'root', [functionDeclaration]);
         return program;
     }
 }

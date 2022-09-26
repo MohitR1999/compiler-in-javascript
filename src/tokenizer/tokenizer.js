@@ -15,35 +15,35 @@ function tokenizer(data) {
     for (let currentIndex = 0; currentIndex < data.length;) {
         let currentCharacter = data[currentIndex];
         // Checking for one character symbols
-        if (currentCharacter == '{') {
-            tokens.push(new Token(TokenTypes.OPEN_CURLY_BRACE, currentCharacter));
+        if (currentCharacter == TokenTypes.OPEN_CURLY_BRACE.value) {
+            tokens.push(new Token(TokenTypes.OPEN_CURLY_BRACE.name, currentCharacter));
             currentIndex++;
-        } else if (currentCharacter == '}') {
-            tokens.push(new Token(TokenTypes.CLOSE_CURLY_BRACE, currentCharacter));
+        } else if (currentCharacter == TokenTypes.CLOSE_CURLY_BRACE.value) {
+            tokens.push(new Token(TokenTypes.CLOSE_CURLY_BRACE.name, currentCharacter));
             currentIndex++;
-        } else if (currentCharacter == '(') {
-            tokens.push(new Token(TokenTypes.OPEN_PARENTHESES, currentCharacter));
+        } else if (currentCharacter == TokenTypes.OPEN_PARENTHESES.value) {
+            tokens.push(new Token(TokenTypes.OPEN_PARENTHESES.name, currentCharacter));
             currentIndex++;
-        } else if (currentCharacter == ')') {
-            tokens.push(new Token(TokenTypes.CLOSE_PARENTHESES, currentCharacter));
+        } else if (currentCharacter == TokenTypes.CLOSE_PARENTHESES.value) {
+            tokens.push(new Token(TokenTypes.CLOSE_PARENTHESES.name, currentCharacter));
             currentIndex++;
-        } else if (currentCharacter == ';') {
-            tokens.push(new Token(TokenTypes.SEMICOLON, currentCharacter));
+        } else if (currentCharacter == TokenTypes.SEMICOLON.value) {
+            tokens.push(new Token(TokenTypes.SEMICOLON.name, currentCharacter));
             currentIndex++;
         } 
         // Checking for negation operator
-        else if (currentCharacter == '-') {
-            tokens.push(new Token(TokenTypes.NEGATION, currentCharacter));
+        else if (currentCharacter == TokenTypes.MINUS.value) {
+            tokens.push(new Token(TokenTypes.MINUS.name, currentCharacter));
             currentIndex++;
         }
         // Checking for bitwise complement operator
-        else if (currentCharacter == '~') {
-            tokens.push(new Token(TokenTypes.BITWISE_COMPLEMENT, currentCharacter));
+        else if (currentCharacter == TokenTypes.BITWISE_COMPLEMENT.value) {
+            tokens.push(new Token(TokenTypes.BITWISE_COMPLEMENT.name, currentCharacter));
             currentIndex++;
         }
         // Checking for logical negation operator
-        else if (currentCharacter == '!') {
-            tokens.push(new Token(TokenTypes.LOGICAL_NEGATION, currentCharacter));
+        else if (currentCharacter == TokenTypes.LOGICAL_NEGATION.name) {
+            tokens.push(new Token(TokenTypes.LOGICAL_NEGATION.value, currentCharacter));
             currentIndex++;
         }
 
@@ -58,14 +58,14 @@ function tokenizer(data) {
             // been advanced further, so there is no need to increment it again
             // as it could cause some characters to be skipped unncessarily
             // Check if the formed word is a reserved keyword or an identifer
-            if (word == 'int') {
-                tokens.push(new Token(TokenTypes.INT_KEYWORD, word));
-            } else if (word == 'return') {
-                tokens.push(new Token(TokenTypes.RETURN_KEYWORD, word));
-            } else if (identiferRegex.test(word)) {
-                tokens.push(new Token(TokenTypes.IDENTIFIER, word));
-            } else if (integerLiteralRegex.test(word)) {
-                tokens.push(new Token(TokenTypes.INTEGER_LITERAL, word));
+            if (word == TokenTypes.INT_KEYWORD.value) {
+                tokens.push(new Token(TokenTypes.INT_KEYWORD.name, word));
+            } else if (word == TokenTypes.RETURN_KEYWORD.value) {
+                tokens.push(new Token(TokenTypes.RETURN_KEYWORD.name, word));
+            } else if (TokenTypes.IDENTIFIER.value.test(word)) {
+                tokens.push(new Token(TokenTypes.IDENTIFIER.name, word));
+            } else if (TokenTypes.INTEGER_LITERAL.value.test(word)) {
+                tokens.push(new Token(TokenTypes.INTEGER_LITERAL.name, word));
             } else {
                 console.log(`Unknown identifier: ${word}`);
             }

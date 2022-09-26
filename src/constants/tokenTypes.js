@@ -1,19 +1,103 @@
-const OPEN_CURLY_BRACE = "OPEN_CURLY_BRACE";
-const CLOSE_CURLY_BRACE = "CLOSE_CURLY_BRACE";
-const OPEN_PARENTHESES = "OPEN_PARENTHESES";
-const CLOSE_PARENTHESES = "CLOSE_PARENTHESES";
-const SEMICOLON = "SEMICOLON";
-const INT_KEYWORD = "INT_KEYWORD";
-const RETURN_KEYWORD = "RETURN_KEYWORD";
-const IDENTIFIER = "IDENTIFIER";
-const INTEGER_LITERAL = "INTEGER_LITERAL";
-const EXPRESSION = "EXPRESSION";
-const STATEMENT = "STATEMENT";
-const FUNCTION_DECLARATION = "FUNCTION_DECLARATION";
-const PROGRAM = "PROGRAM";
-const NEGATION = "NEGATION";
-const BITWISE_COMPLEMENT = "BITWISE_COMPLEMENT";
-const LOGICAL_NEGATION = "LOGICAL_NEGATION";
+/**
+ * List of all the supported tokens
+ */
+const OPEN_CURLY_BRACE = {
+    name : "OPEN_CURLY_BRACE",
+    value : "{"
+};
+
+const CLOSE_CURLY_BRACE = {
+    name : "CLOSE_CURLY_BRACE",
+    value : "}"
+};
+
+const OPEN_PARENTHESES = {
+    name : "OPEN_PARENTHESES",
+    value : "("
+};
+
+const CLOSE_PARENTHESES = {
+    name : "CLOSE_PARENTHESES",
+    value : ")"
+};
+
+const SEMICOLON = {
+    name : "SEMICOLON",
+    value : ";"
+};
+
+const INT_KEYWORD = {
+    name : "INT_KEYWORD",
+    value : "int"
+};
+
+const RETURN_KEYWORD = {
+    name : "RETURN_KEYWORD",
+    value : "return"
+};
+
+/**
+ * Unary operators
+ */
+const MINUS = {
+    name : "MINUS",
+    value : "-"
+};
+
+const BITWISE_COMPLEMENT = {
+    name : "BITWISE_COMPLEMENT",
+    value : "~"
+};
+
+const LOGICAL_NEGATION = {
+    name : "LOGICAL_NEGATION",
+    value : "!"
+};
+
+/**
+ * Binary operators
+ */
+const ADDITION = {
+    name : "ADDITION",
+    value : "+"
+};
+
+const MULTIPLICATION = {
+    name : "MULTIPLICATION",
+    value : "*"
+};
+
+const DIVISION = {
+    name : "DIVISION",
+    value : "/"
+};
+
+
+const IDENTIFIER = {
+    name : "IDENTIFIER",
+    value : new RegExp('[_a-zA-Z]\w*')
+};
+
+const INTEGER_LITERAL = {
+    name : "INTEGER_LITERAL",
+    value : new RegExp('[0-9]+')
+};
+
+const EXPRESSION = {
+    name : "EXPRESSION"
+};
+
+const STATEMENT = {
+    name : "STATEMENT"
+};
+
+const FUNCTION_DECLARATION = {
+    name : "FUNCTION_DECLARATION"
+};
+
+const PROGRAM = {
+    name : "PROGRAM"
+};
 
 module.exports.OPEN_CURLY_BRACE = OPEN_CURLY_BRACE;
 module.exports.CLOSE_CURLY_BRACE = CLOSE_CURLY_BRACE;
@@ -28,7 +112,10 @@ module.exports.EXPRESSION = EXPRESSION;
 module.exports.STATEMENT = STATEMENT;
 module.exports.FUNCTION_DECLARATION = FUNCTION_DECLARATION;
 module.exports.PROGRAM = PROGRAM;
-module.exports.NEGATION = NEGATION;
+module.exports.MINUS = MINUS;
 module.exports.BITWISE_COMPLEMENT = BITWISE_COMPLEMENT;
 module.exports.LOGICAL_NEGATION = LOGICAL_NEGATION;
+module.exports.ADDITION = ADDITION;
+module.exports.MULTIPLICATION = MULTIPLICATION;
+module.exports.DIVISION = DIVISION;
 

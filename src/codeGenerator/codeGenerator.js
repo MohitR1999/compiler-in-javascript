@@ -7,30 +7,30 @@ const { exec } = require('child_process');
  * @param {Object} treeNode The node of AST
  */
 function generateAssemblyForTreeNode(treeNode) {
-    if (treeNode.type == TokenTypes.INTEGER_LITERAL) {
+    if (treeNode.type == TokenTypes.INTEGER_LITERAL.name) {
         let assemblyString = `\tmovl    $${treeNode.value}, %eax\n`;
         treeNode.assembly = assemblyString;
-    } else if (treeNode.type == TokenTypes.STATEMENT) {
+    } else if (treeNode.type == TokenTypes.STATEMENT.name) {
         if (treeNode.value == 'return') {
             let assemblyString = treeNode.children[0].assembly + `\tret\n`;
             treeNode.assembly = assemblyString;
         }
-    } else if (treeNode.type == TokenTypes.FUNCTION_DECLARATION) {
+    } else if (treeNode.type == TokenTypes.FUNCTION_DECLARATION.name) {
         let assemblyString = `${treeNode.value}:\n` + treeNode.children[0].assembly;
         treeNode.assembly = assemblyString;
     } 
     // Code generation for Negation operator
-    else if (treeNode.type == TokenTypes.NEGATION) {
+    else if (treeNode.type == TokenTypes.MINUS.name) {
         let assemblyString = treeNode.children[0].assembly + `\tneg     %eax\n`;
         treeNode.assembly = assemblyString;
     } 
     // Code generation for Bitwise complement operator
-    else if (treeNode.type == TokenTypes.BITWISE_COMPLEMENT) {
+    else if (treeNode.type == TokenTypes.BITWISE_COMPLEMENT.name) {
         let assemblyString = treeNode.children[0].assembly + `\tnot     %eax\n`;
         treeNode.assembly = assemblyString;
     }
     // Code generation for logical negation operator
-    else if (treeNode.type == TokenTypes.LOGICAL_NEGATION) {
+    else if (treeNode.type == TokenTypes.LOGICAL_NEGATION.name) {
         let assemblyString = treeNode.children[0].assembly;
         assemblyString += `\tcmpl    $0, %eax\n`;
         assemblyString += `\tmovl    $0, %eax\n`;
@@ -81,7 +81,6 @@ function codeGenerator(abstractSyntaxTree, fileName) {
                 console.log(`stderr: ${stderr}`);
                 return;
             }
-            console.log(`stdout: ${stdout}`);
         });
     } catch (err) {
         console.log(err);
