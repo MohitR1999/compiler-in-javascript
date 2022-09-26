@@ -24,3 +24,4 @@ To run this project follow these steps:
 - To test the compiler against a fixed set of test cases, you can use the sample c programs present in input directory. A script test.py can also be used for running the tests
 - To run the tests, run ```python3 test.py <Test_numbers>``` from the root directory of the project
 - Example: ```python3 test.py 1 2 3``` will run the tests 1, 2 and 3
+- Test programs are inspired by [nlsandler](https://github.com/nlsandler)
