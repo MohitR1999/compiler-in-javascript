@@ -1,4 +1,4 @@
-# Compiler in javascript (v1.1.1)
+# Compiler in javascript (v1.1.2)
 This is a small, toy compiler that I've written in javascript. It's not meant to be used in production, but rather as a learning tool. I've tried to make it as simple as possible, while still being useful. It's not meant to be a full-featured compiler, but rather a small, simple compiler that can be used to learn about compiler design.
 
 What this compiler can do for now:
