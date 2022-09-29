@@ -12,7 +12,7 @@
                 "<node_internals>/**"
             ],
             "program": "${workspaceFolder}/src/index.js",
-            "args": ["${workspaceFolder}/input/stage_1/valid/newlines.c"]
+            "args": ["${workspaceFolder}/input/stage_3/valid/add.c"]
         }
     ]
 }

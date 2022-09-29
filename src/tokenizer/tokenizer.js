@@ -42,8 +42,26 @@ function tokenizer(data) {
             currentIndex++;
         }
         // Checking for logical negation operator
-        else if (currentCharacter == TokenTypes.LOGICAL_NEGATION.name) {
-            tokens.push(new Token(TokenTypes.LOGICAL_NEGATION.value, currentCharacter));
+        else if (currentCharacter == TokenTypes.LOGICAL_NEGATION.value) {
+            tokens.push(new Token(TokenTypes.LOGICAL_NEGATION.name, currentCharacter));
+            currentIndex++;
+        }
+
+        // Check for addition operator
+        else if (currentCharacter == TokenTypes.ADDITION.value) {
+            tokens.push(new Token(TokenTypes.ADDITION.name, currentCharacter));
+            currentIndex++;
+        }
+
+        // Checking for multiplication operator
+        else if (currentCharacter == TokenTypes.MULTIPLICATION.value) {
+            tokens.push(new Token(TokenTypes.MULTIPLICATION.name, currentCharacter));
+            currentIndex++;
+        }
+
+        // Checking for division operator
+        else if (currentCharacter == TokenTypes.DIVISION.value) {
+            tokens.push(new Token(TokenTypes.DIVISION.name, currentCharacter));
             currentIndex++;
         }
 

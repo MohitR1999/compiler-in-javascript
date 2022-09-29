@@ -6,10 +6,13 @@ const Token = require('../constants/Token');
  * All the non terminals would start with a capital letter,
  * and all the terminals would start with a small letter
  * Program -> Function_Declaration
- * Function_Declaration -> int function_name () { Statement }
- * Statement -> return Expression ;
- * Expression -> UnaryOperator Expression | integer
- * UnaryOperator -> - | ~ | !
+ * Function_Declaration -> "int" function_name "(" ")" "{" Statement "}"
+ * Statement -> "return" Expression ";"
+ * Expression -> Term { ("+" | "-") Term }
+ * Term -> Factor { ("*" | "/") Factor }
+ * Factor -> "(" Expression ")" | UnaryOperator Factor | integer
+ * BinaryOperator -> "-" | "+" | "/" | "*"
+ * UnaryOperator -> "-" | "~" | "!"
  */
 
 /**
