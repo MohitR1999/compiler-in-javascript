@@ -83,6 +83,14 @@ const INTEGER_LITERAL = {
     value : new RegExp('[0-9]+')
 };
 
+const FACTOR = {
+    name : "FACTOR"
+}
+
+const TERM = {
+    name : "TERM"
+};
+
 const EXPRESSION = {
     name : "EXPRESSION"
 };
@@ -118,4 +126,5 @@ module.exports.LOGICAL_NEGATION = LOGICAL_NEGATION;
 module.exports.ADDITION = ADDITION;
 module.exports.MULTIPLICATION = MULTIPLICATION;
 module.exports.DIVISION = DIVISION;
-
+module.exports.TERM = TERM;
+module.exports.FACTOR = FACTOR;

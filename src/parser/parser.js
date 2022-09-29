@@ -32,6 +32,84 @@ class Node {
 }
 
 /**
+ * Returns true if the token is a unary operator, false otherwise
+ * @param {Object} token 
+ */
+function isUnaryOperator(token) {
+    if (token.tokenType == TokenTypes.MINUS.name || token.tokenType == TokenTypes.LOGICAL_NEGATION.name || token.tokenType == TokenTypes.BITWISE_COMPLEMENT.name) {
+        return true;
+    }
+    return false;
+}
+
+/**
+ * This function parses factors
+ * @param {Array} tokens An array of tokens
+ * @param {Object} indexObject An object that holds the value of current index, as javascript
+ * doesn't support pass by reference for atomic integers
+ */
+function parseFactor(tokens, indexObject) {
+    let token = tokens[indexObject.value];
+    // Check if token exists
+    if (!token) {
+        console.log('Unexpected end of input. Exiting');
+        exit(1);
+    }
+    // Check if it is opening parentheses
+    else if (token.tokenType == TokenTypes.OPEN_PARENTHESES.name) {
+        indexObject.value++;
+        // parse expression inside
+        let expression = parseExpression(tokens, indexObject);
+        // check if closing parentheses are there
+        token = tokens[indexObject.value];
+        if (token.tokenType != TokenTypes.CLOSE_PARENTHESES.name) {
+            console.log(`I was expecting a closing parentheses. How mean of you to not put that in your code. I'm gonna exit now...`);
+            exit(1);
+        }
+        return expression;
+    }
+    // check if it is unary operator
+    else if (isUnaryOperator(token)) {
+        indexObject.value++;
+        let factor = parseFactor(tokens, indexObject);
+        return new Node(token.tokenType, token.value, [factor]);
+    }
+    // check if it is integer
+    else if (token.tokenType == TokenTypes.INTEGER_LITERAL.name) {
+        indexObject.value++;
+        return new Node(token.tokenType, token.value, []);
+    } else {
+        console.log(`Duh! What's this character? I didn't expect this: ${token.value}. Exiting...`);
+        exit(1);
+    }
+}
+
+/**
+ * This function parses terms
+ * @param {Array} tokens An array of tokens
+ * @param {Object} indexObject An object that holds the value of current index, as javascript
+ * doesn't support pass by reference for atomic integers
+ */
+function parseTerm(tokens, indexObject) {
+    let token = tokens[indexObject.value];
+    if (!token) {
+        console.log(`Ahh! Can't see any more tokens to finish the input! Exiting...`);
+        exit(1);
+    } else {
+        let factor = parseFactor(tokens, indexObject);
+        token = tokens[indexObject.value];
+        while (token.tokenType == TokenTypes.MULTIPLICATION.name || token.tokenType == TokenTypes.DIVISION.name) {
+            indexObject.value++;
+            let nextTerm = parseTerm(tokens, indexObject);
+            factor = new Node(token.tokenType, token.value, [factor, nextTerm]);
+            token = tokens[indexObject.value];
+        }
+        return factor;
+    }
+}
+
+
+/**
  * This function parses expressions
  * @param {Array} tokens An array of tokens
  * @param {Object} indexObject An object that holds the value of current index, as javascript
@@ -42,21 +120,17 @@ function parseExpression(tokens, indexObject) {
     if (!token) {
         console.log('Unexpected end of input.');
         exit(1);
-    } 
-    // if it is a integer literal, return constant node
-    else if (token.tokenType == TokenTypes.INTEGER_LITERAL.name) {
-        indexObject.value++;
-        return new Node(token.tokenType, token.value, []);
-    } 
-    // check if it is a unary operator
-    else if (token.tokenType == TokenTypes.MINUS.name || token.tokenType == TokenTypes.BITWISE_COMPLEMENT.name || token.tokenType == TokenTypes.LOGICAL_NEGATION.name) {
-        let operatorNode = new Node(token.tokenType, token.value, []);
-        indexObject.value++;
-        let innerExpression = parseExpression(tokens, indexObject);
-        return new Node(operatorNode.type, operatorNode.value, [innerExpression]);
-    } else {
-        console.log(`Missing expression. Found ${token.value}`);
-        exit(1);
+    }
+    else {
+        let term = parseTerm(tokens, indexObject);
+        token = tokens[indexObject.value];
+        while (token.tokenType == TokenTypes.ADDITION.name || token.tokenType == TokenTypes.MULTIPLICATION.name) {
+            indexObject.value++;
+            let nextTerm = parseTerm(tokens, indexObject);
+            term = new Node(token.tokenType, token.value, [term, nextTerm]);
+            token = tokens[indexObject.value];
+        }
+        return term;
     }
 }
 
