@@ -52,7 +52,7 @@ function parseFactor(tokens, indexObject) {
     let token = tokens[indexObject.value];
     // Check if token exists
     if (!token) {
-        console.log('Unexpected end of input. Exiting');
+        console.log('Ahhh! I was expecting more factors here! Exiting now...');
         exit(1);
     }
     // Check if it is opening parentheses
@@ -62,6 +62,7 @@ function parseFactor(tokens, indexObject) {
         let expression = parseExpression(tokens, indexObject);
         // check if closing parentheses are there
         token = tokens[indexObject.value];
+        indexObject.value++;
         if (token.tokenType != TokenTypes.CLOSE_PARENTHESES.name) {
             console.log(`I was expecting a closing parentheses. How mean of you to not put that in your code. I'm gonna exit now...`);
             exit(1);
@@ -93,7 +94,7 @@ function parseFactor(tokens, indexObject) {
 function parseTerm(tokens, indexObject) {
     let token = tokens[indexObject.value];
     if (!token) {
-        console.log(`Ahh! Can't see any more tokens to finish the input! Exiting...`);
+        console.log(`Ahh! Can't see any more terms to finish the input! Exiting...`);
         exit(1);
     } else {
         let factor = parseFactor(tokens, indexObject);
@@ -118,7 +119,7 @@ function parseTerm(tokens, indexObject) {
 function parseExpression(tokens, indexObject) {
     let token = tokens[indexObject.value];
     if (!token) {
-        console.log('Unexpected end of input.');
+        console.log('Ahh! Come on, there are no more expressions here! Exiting...');
         exit(1);
     }
     else {
@@ -143,17 +144,17 @@ function parseExpression(tokens, indexObject) {
 function parseStatement(tokens, indexObject) {
     let token = tokens[indexObject.value];
     if (!token) {
-        console.log('Unexpected end of input. Exiting');
+        console.log('Ahh there is no statement! Exiting now...');
         exit(1);
     } else if (token.tokenType != TokenTypes.RETURN_KEYWORD.name) {
-        console.log('Error while parsing statement. Expected return statement');
+        console.log(`Why did you forget the return keyword here? I'm just gonna exit now...`);
         exit(1);
     } else {
         // Return keyword was found, hence next we should have an integer
         indexObject.value++;
         token = tokens[indexObject.value];
         if (!token) {
-            console.log('Unexpected end of input. Exiting');
+            console.log('Nothing... I saw nothing to return! Exiting now...');
             exit(1);
         } else {
             // This would return the expression AND it would increment
@@ -167,7 +168,7 @@ function parseStatement(tokens, indexObject) {
                 console.log('Unexpected end of input. Exiting');
                 exit(1);
             } else if (token.tokenType != TokenTypes.SEMICOLON.name) {
-                console.log('Syntax Error, expected a semicolon. Exiting');
+                console.log('Do I need to remind you to put semicolon at the end of the return statement, huh? Exiting now...');
                 exit(1);
             } else {
                 indexObject.value++;
@@ -188,12 +189,12 @@ function parseFunction(tokens, indexObject) {
     let functionName = '';
     if (!token) {
         // Unexpected end of input
-        console.log('Unexpected end of input. Exiting');
+        console.log('Nothing to see here! Exiting now from parseFunction...');
         exit(1);
     }
     else if (token.tokenType != TokenTypes.INT_KEYWORD.name) {
         // int return type not found
-        console.log('Error while parsing, expected return type int. Exiting');
+        console.log('Specify return type as int, you noob! Exiting now...');
         exit(1);
     } else {
         // int return type found, now proceeding ahead
@@ -201,11 +202,11 @@ function parseFunction(tokens, indexObject) {
         token = tokens[indexObject.value];
         if (!token) {
             // Unexpected end of input
-            console.log('Unexpected end of input. Exiting');
+            console.log('Another incomplete input! Go finish writing your program first! Exiting now...');
             exit(1);
         } else if (token.tokenType != TokenTypes.IDENTIFIER.name) {
             // Identifier not found
-            console.log('Error while parsing, expected a function name. Exiting');
+            console.log('Write a name for your function noob! Exiting...');
             exit(1);
         } else {
             // Identifier found, proceeding ahead
@@ -214,11 +215,11 @@ function parseFunction(tokens, indexObject) {
             token = tokens[indexObject.value];
             if (!token) {
                 // Unexpected end of input
-                console.log('Unexpected end of input. Exiting');
+                console.log('Oh come on! Write something more! Exiting now...');
                 exit(1);
             } else if (token.tokenType != TokenTypes.OPEN_PARENTHESES.name) {
                 // Open parentheses not found
-                console.log('Error while parsing, expected an opening parentheses (. Exiting');
+                console.log('I was expecting an opening parentheses that looks like this: ). Exiting...');
                 exit(1);
             } else {
                 // Opening parentheses found, proceeding ahead
@@ -226,11 +227,11 @@ function parseFunction(tokens, indexObject) {
                 token = tokens[indexObject.value];
                 if (!token) {
                     // Unexpected end of input
-                    console.log('Unexpected end of input. Exiting');
+                    console.log('Again! Unexpected end of input! Exiting now...');
                     exit(1);
                 } else if (token.tokenType != TokenTypes.CLOSE_PARENTHESES.name) {
                     // Closing parentheses not found
-                    console.log('Error while parsing, expected an closing parentheses ). Exiting');
+                    console.log('Do I need to remind you to close your opening parentheses? Noob! Exiting now...');
                     exit(1);
                 } else {
                     // Closing parentheses found, proceeding ahead
@@ -238,11 +239,11 @@ function parseFunction(tokens, indexObject) {
                     token = tokens[indexObject.value];
                     if (!token) {
                         // Unexpected end of input
-                        console.log('Unexpected end of input. Exiting');
+                        console.log('Why do you write incomplete programs? I was not expecting this to end right now. Exiting...');
                         exit(1);
                     } else if (token.tokenType != TokenTypes.OPEN_CURLY_BRACE.name) {
                         // Opening curly brace not found
-                        console.log('Error while parsing, expected an opening curly brace {. Exiting');
+                        console.log(`I don't see an opening curly brace here {. Exiting...`);
                         exit(1);
                     } else {
                         // Opening curly brace found, proceeding ahead
@@ -252,11 +253,11 @@ function parseFunction(tokens, indexObject) {
                         token = tokens[indexObject.value];
                         if (!token) {
                             // Unexpected end of input
-                            console.log('Unexpected end of input. Exiting');
+                            console.log('Ahhh! How many times do I need to repeat that I do not like incomplete programs! Exiting...');
                             exit(1);
                         } else if (token.tokenType != TokenTypes.CLOSE_CURLY_BRACE.name) {
                             // Closing curly brace not found
-                            console.log('Error while parsing, expected an closing curly brace }. Exiting');
+                            console.log(`I was hoping for a closing curly brace }, but as you did not provide that, Imma head out...`);
                             exit(1);
                         } else {
                             let functionDeclaration = new Node(TokenTypes.FUNCTION_DECLARATION.name, functionName, [statement]);

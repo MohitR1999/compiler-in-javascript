@@ -12,7 +12,7 @@
                 "<node_internals>/**"
             ],
             "program": "${workspaceFolder}/src/index.js",
-            "args": ["${workspaceFolder}/input/stage_3/valid/precedence.c"]
+            "args": ["${workspaceFolder}/input/stage_3/invalid/no_semicolon.c"]
         }
     ]
 }
