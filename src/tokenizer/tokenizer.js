@@ -10,8 +10,6 @@ function tokenizer(data) {
     // Regular expressions for usage later
     let tokens = [];
     const alphanumericRegex = /[_a-zA-Z0-9]/;
-    const identiferRegex = /[_a-zA-Z]\w*/;
-    const integerLiteralRegex = /[0-9]+/;
     for (let currentIndex = 0; currentIndex < data.length;) {
         let currentCharacter = data[currentIndex];
         // Checking for one character symbols
