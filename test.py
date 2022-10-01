@@ -1,6 +1,4 @@
 #!/usr/bin/python3
-from asyncio import constants
-from concurrent.futures import process
 import os
 import sys
 import subprocess
@@ -36,7 +34,6 @@ def run_tests(testDirectory, testType, expectedReturnCode):
     print(bcolors.OKBLUE + bcolors.BOLD + f"Running tests for {testType}" + bcolors.ENDC)
     current_directory = os.path.abspath(os.path.dirname(__file__))
     test_directory = os.path.join(current_directory, f"input/{testDirectory}")
-    # print(test_directory)
     test_files = os.listdir(test_directory)
     for file in test_files:
         file_path = os.path.join(test_directory, file)
