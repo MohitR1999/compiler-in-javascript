@@ -8,7 +8,7 @@ const { exec } = require('child_process');
  */
 function generateAssemblyForTreeNode(treeNode) {
     if (treeNode.type == TokenTypes.INTEGER_LITERAL.name) {
-        let assemblyString = `\tmovl    $${treeNode.value}, %eax\n`;
+        let assemblyString = `\tmovl    $${treeNode.value}, %rax\n`;
         treeNode.assembly = assemblyString;
     } else if (treeNode.type == TokenTypes.STATEMENT.name) {
         if (treeNode.value == 'return') {
@@ -21,22 +21,22 @@ function generateAssemblyForTreeNode(treeNode) {
     } 
     // Code generation for Negation operator
     else if (treeNode.type == TokenTypes.MINUS.name) {
-        let assemblyString = treeNode.children[0].assembly + `\tneg     %eax\n`;
+        let assemblyString = treeNode.children[0].assembly + `\tneg     %rax\n`;
         treeNode.assembly = assemblyString;
     } 
     // Code generation for Bitwise complement operator
     else if (treeNode.type == TokenTypes.BITWISE_COMPLEMENT.name) {
-        let assemblyString = treeNode.children[0].assembly + `\tnot     %eax\n`;
+        let assemblyString = treeNode.children[0].assembly + `\tnot     %rax\n`;
         treeNode.assembly = assemblyString;
     }
     // Code generation for logical negation operator
     else if (treeNode.type == TokenTypes.LOGICAL_NEGATION.name) {
         let assemblyString = treeNode.children[0].assembly;
-        assemblyString += `\tcmpl    $0, %eax\n`;
-        assemblyString += `\tmovl    $0, %eax\n`;
+        assemblyString += `\tcmpl    $0, %rax\n`;
+        assemblyString += `\tmovl    $0, %rax\n`;
         assemblyString += `\tsete    %al\n`;
         treeNode.assembly = assemblyString;
-    }
+    } 
     
     else {
         let assemblyString = `\t.globl ${treeNode.children[0].value}\n` + treeNode.children[0].assembly;
