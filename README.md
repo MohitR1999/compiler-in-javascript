@@ -26,3 +26,4 @@ To run this project follow these steps:
 - To run the tests, run ```python3 test.py <Test_numbers>``` from the root directory of the project
 - Example: ```python3 test.py 1 2 3``` will run the tests 1, 2 and 3
 - Test programs are inspired by [nlsandler](https://github.com/nlsandler)
+- This compiler generates x64 assembly code in AT&T syntax.
