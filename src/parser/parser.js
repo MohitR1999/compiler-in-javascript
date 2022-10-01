@@ -100,7 +100,7 @@ function parseTerm(tokens, indexObject) {
         token = tokens[indexObject.value];
         while (token.tokenType == TokenTypes.MULTIPLICATION.name || token.tokenType == TokenTypes.DIVISION.name) {
             indexObject.value++;
-            let nextTerm = parseTerm(tokens, indexObject);
+            let nextTerm = parseFactor(tokens, indexObject);
             factor = new Node(token.tokenType, token.value, [factor, nextTerm]);
             token = tokens[indexObject.value];
         }
@@ -124,7 +124,7 @@ function parseExpression(tokens, indexObject) {
     else {
         let term = parseTerm(tokens, indexObject);
         token = tokens[indexObject.value];
-        while (token.tokenType == TokenTypes.ADDITION.name || token.tokenType == TokenTypes.MULTIPLICATION.name) {
+        while (token.tokenType == TokenTypes.ADDITION.name || token.tokenType == TokenTypes.MINUS.name) {
             indexObject.value++;
             let nextTerm = parseTerm(tokens, indexObject);
             term = new Node(token.tokenType, token.value, [term, nextTerm]);
