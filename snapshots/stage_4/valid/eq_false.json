@@ -1,0 +1,13 @@
+[
+  { "tokenType": "INT_KEYWORD", "value": "int" },
+  { "tokenType": "IDENTIFIER", "value": "main" },
+  { "tokenType": "OPEN_PARENTHESES", "value": "(" },
+  { "tokenType": "CLOSE_PARENTHESES", "value": ")" },
+  { "tokenType": "OPEN_CURLY_BRACE", "value": "{" },
+  { "tokenType": "RETURN_KEYWORD", "value": "return" },
+  { "tokenType": "INTEGER_LITERAL", "value": "1" },
+  { "tokenType": "EQUAL_TO", "value": "==" },
+  { "tokenType": "INTEGER_LITERAL", "value": "2" },
+  { "tokenType": "SEMICOLON", "value": ";" },
+  { "tokenType": "CLOSE_CURLY_BRACE", "value": "}" }
+]
