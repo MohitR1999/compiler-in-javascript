@@ -28,7 +28,7 @@ function tokenizer(data) {
         } else if (currentCharacter == TokenTypes.SEMICOLON.value) {
             tokens.push(new Token(TokenTypes.SEMICOLON.name, currentCharacter));
             currentIndex++;
-        } 
+        }
         // Checking for negation operator
         else if (currentCharacter == TokenTypes.MINUS.value) {
             tokens.push(new Token(TokenTypes.MINUS.name, currentCharacter));
@@ -37,11 +37,6 @@ function tokenizer(data) {
         // Checking for bitwise complement operator
         else if (currentCharacter == TokenTypes.BITWISE_COMPLEMENT.value) {
             tokens.push(new Token(TokenTypes.BITWISE_COMPLEMENT.name, currentCharacter));
-            currentIndex++;
-        }
-        // Checking for logical negation operator
-        else if (currentCharacter == TokenTypes.LOGICAL_NEGATION.value) {
-            tokens.push(new Token(TokenTypes.LOGICAL_NEGATION.name, currentCharacter));
             currentIndex++;
         }
 
@@ -85,10 +80,87 @@ function tokenizer(data) {
             } else {
                 console.log(`Unknown identifier: ${word}`);
             }
-        } else {
+        }
+        // Checking for boolean logical operators
+        // since these are two charactered operators, we need
+        // to check each character one by one
+        else if (currentCharacter == '&'
+            || currentCharacter == '|'
+            || currentCharacter == '='
+            || currentCharacter == '!'
+            || currentCharacter == '<'
+            || currentCharacter == '>'
+        ) {
+            // cool, so it can be either a single character operator
+            // or a two charactered one
+            // looking one character ahead to judge whether it is a single character
+            // operator or two character operator
+            let nextCharacter = data[currentIndex + 1];
+            if (
+                nextCharacter == '&'
+                || nextCharacter == '|'
+                || nextCharacter == '='
+            ) {
+                currentIndex++;
+                // We don't have a space following the current character, so it can be
+                // a two charactered operator
+                let foundToken = currentCharacter + nextCharacter;
+                // check if it is a logical AND
+                if (foundToken == TokenTypes.LOGICAL_AND.value) {
+                    tokens.push(new Token(TokenTypes.LOGICAL_AND.name, foundToken));
+                }
+                // check if it is a logical OR
+                else if (foundToken == TokenTypes.LOGICAL_OR.value) {
+                    tokens.push(new Token(TokenTypes.LOGICAL_OR.name, foundToken));
+                }
+                // check if it is a equal to operator
+                else if (foundToken == TokenTypes.EQUAL_TO.value) {
+                    tokens.push(new Token(TokenTypes.EQUAL_TO.name, foundToken));
+                }
+                // check if it is a not equal to operator
+                else if (foundToken == TokenTypes.NOT_EQUAL_TO.value) {
+                    tokens.push(new Token(TokenTypes.NOT_EQUAL_TO.name, foundToken));
+                }
+                // check if it is less than or equals to operator
+                else if (foundToken == TokenTypes.LESS_THAN_OR_EQUAL_TO.value) {
+                    tokens.push(new Token(TokenTypes.LESS_THAN_OR_EQUAL_TO.name, foundToken));
+                }
+                // check if it is greater than or equal to operator
+                else if (foundToken == TokenTypes.GREATER_THAN_OR_EQUAL_TO.value) {
+                    tokens.push(new Token(TokenTypes.GREATER_THAN_OR_EQUAL_TO.name, foundToken));
+                }
+                // otherwise just log an error
+                else {
+                    console.log(`What's this: '${foundToken}' ? I know nothing like that...`);
+                }
+            } else {
+                // We encountered some other character, so it is a single character operator
+                // checking for less than operator
+                if (currentCharacter == TokenTypes.LESS_THAN.value) {
+                    tokens.push(new Token(TokenTypes.LESS_THAN.name, currentCharacter));
+                }
+                // check if it is greater than operator
+                else if (currentCharacter == TokenTypes.GREATER_THAN.value) {
+                    tokens.push(new Token(TokenTypes.GREATER_THAN.name, currentCharacter));
+                }
+                // Checking for logical negation operator
+                else if (currentCharacter == TokenTypes.LOGICAL_NEGATION.value) {
+                    tokens.push(new Token(TokenTypes.LOGICAL_NEGATION.name, currentCharacter));
+                    currentIndex++;
+                }
+                // else log as error
+                else {
+                    console.log(`Huh? What's this: '${currentCharacter}'? I have never seen anything like that...`);
+                }
+            }
+            currentIndex++;
+        }
+
+        else {
             currentIndex++;
         }
     }
+    console.log(JSON.stringify(tokens));
     return tokens;
 }
 

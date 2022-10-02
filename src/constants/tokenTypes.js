@@ -72,6 +72,48 @@ const DIVISION = {
     value : "/"
 };
 
+/**
+ * Few more boolean operators
+ */
+const LOGICAL_AND = {
+    name : "LOGICAL_AND",
+    value : "&&"
+};
+
+const LOGICAL_OR = {
+    name : "LOGICAL_OR",
+    value : "||"
+};
+
+const EQUAL_TO = {
+    name : "EQUAL_TO",
+    value : "=="
+};
+
+const NOT_EQUAL_TO = {
+    name : "NOT_EQUAL_TO",
+    value : "!="
+};
+
+const LESS_THAN = {
+    name : "LESS_THAN",
+    value : "<"
+};
+
+const LESS_THAN_OR_EQUAL_TO = {
+    name : "LESS_THAN_OR_EQUAL_TO",
+    value : "<="
+};
+
+const GREATER_THAN = {
+    name : "GREATER_THAN",
+    value : ">"
+};
+
+const GREATER_THAN_OR_EQUAL_TO = {
+    name : "GREATER_THAN_OR_EQUAL_TO",
+    value : ">="
+};
 
 const IDENTIFIER = {
     name : "IDENTIFIER",
@@ -128,3 +170,11 @@ module.exports.MULTIPLICATION = MULTIPLICATION;
 module.exports.DIVISION = DIVISION;
 module.exports.TERM = TERM;
 module.exports.FACTOR = FACTOR;
+module.exports.LOGICAL_AND = LOGICAL_AND;
+module.exports.LOGICAL_OR = LOGICAL_OR;
+module.exports.EQUAL_TO = EQUAL_TO;
+module.exports.NOT_EQUAL_TO = NOT_EQUAL_TO;
+module.exports.LESS_THAN = LESS_THAN;
+module.exports.LESS_THAN_OR_EQUAL_TO = LESS_THAN_OR_EQUAL_TO;
+module.exports.GREATER_THAN = GREATER_THAN;
+module.exports.GREATER_THAN_OR_EQUAL_TO = GREATER_THAN_OR_EQUAL_TO;
