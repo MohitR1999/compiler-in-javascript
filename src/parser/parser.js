@@ -8,10 +8,13 @@ const Token = require('../constants/Token');
  * Program -> Function_Declaration
  * Function_Declaration -> "int" function_name "(" ")" "{" Statement "}"
  * Statement -> "return" Expression ";"
- * Expression -> Term { ("+" | "-") Term }
+ * Expression -> LogicalAndExpression { "||" LogicalAndExpression }
+ * LogicalAndExpression -> EqualityExpression { "&&" EqualityExpression }
+ * EqualityExpression -> RelationalExpression { ( "!=" | "==" ) RelationalExpression }
+ * RelationalExpression -> AdditiveExpression { ( "<" | ">" | "<=" | ">=" ) AdditiveExpression }
+ * AdditiveExpression -> Term { ("+" | "-") Term }
  * Term -> Factor { ("*" | "/") Factor }
  * Factor -> "(" Expression ")" | UnaryOperator Factor | integer
- * BinaryOperator -> "-" | "+" | "/" | "*"
  * UnaryOperator -> "-" | "~" | "!"
  */
 
@@ -59,7 +62,7 @@ function parseFactor(tokens, indexObject) {
     else if (token.tokenType == TokenTypes.OPEN_PARENTHESES.name) {
         indexObject.value++;
         // parse expression inside
-        let expression = parseExpression(tokens, indexObject);
+        let expression = parseAdditiveExpression(tokens, indexObject);
         // check if closing parentheses are there
         token = tokens[indexObject.value];
         indexObject.value++;
@@ -116,7 +119,7 @@ function parseTerm(tokens, indexObject) {
  * @param {Object} indexObject An object that holds the value of current index, as javascript
  * doesn't support pass by reference for atomic integers
  */
-function parseExpression(tokens, indexObject) {
+function parseAdditiveExpression(tokens, indexObject) {
     let token = tokens[indexObject.value];
     if (!token) {
         console.log('Ahh! Come on, there are no more expressions here! Exiting...');
@@ -132,6 +135,105 @@ function parseExpression(tokens, indexObject) {
             token = tokens[indexObject.value];
         }
         return term;
+    }
+}
+
+/**
+ * This function parses a relational expression as specified in the grammar
+ * @param {*} tokens The list of tokens
+ * @param {*} indexObject An object that holds the value of current index, as javascript
+ * doesn't support pass by reference for atomic integers 
+ */
+function parseRelationalExpression(tokens, indexObject) {
+    let token = tokens[indexObject.value];
+    if (!token) {
+        console.log(`Huh, I did not see any token. Exiting...`);
+    } else {
+        let additiveExpression = parseAdditiveExpression(tokens, indexObject);
+        token = tokens[indexObject.value];
+        while(token.tokenType == TokenTypes.LESS_THAN.name 
+            || token.tokenType == TokenTypes.GREATER_THAN.name 
+            || token.tokenType == TokenTypes.GREATER_THAN_OR_EQUAL_TO.name
+            || token.tokenType == TokenTypes.LESS_THAN_OR_EQUAL_TO.name
+            ) {
+                indexObject.value++;
+                let nextAdditiveExpression = parseAdditiveExpression(tokens, indexObject);
+                additiveExpression = new Node(token.tokenType, token.value, [additiveExpression, nextAdditiveExpression]);
+                token = tokens[indexObject.value];
+            }
+        return additiveExpression;
+    }
+}
+
+/**
+ * This function parses an equality expression as specified in the grammar
+ * @param {*} tokens The list of tokens
+ * @param {*} indexObject An object that holds the value of current index, as javascript
+ * doesn't support pass by reference for atomic integers 
+ */
+function parseEqualityExpression(tokens, indexObject) {
+    let token = tokens[indexObject.value];
+    if (!token) {
+        console.log(`Inside [parseEqualityExpression]: I did not see any token here. Exiting now...`);
+        exit(1);
+    } else {
+        let relationalExpression = parseRelationalExpression(tokens, indexObject);
+        token = tokens[indexObject.value];
+        while(token.tokenType == TokenTypes.EQUAL_TO.name || token.tokenType == TokenTypes.NOT_EQUAL_TO.name) {
+            indexObject.value++;
+            let nextRelationalExpression = parseRelationalExpression(tokens, indexObject);
+            relationalExpression = new Node(token.tokenType, token.value, [relationalExpression, nextRelationalExpression]);
+            token = tokens[indexObject.value];
+        }
+        return relationalExpression;
+    }
+}
+
+/**
+ * This function parses a logical AND expression as specified in the grammar
+ * @param {*} tokens The list of tokens
+ * @param {*} indexObject An object that holds the value of current index, as javascript
+ * doesn't support pass by reference for atomic integers 
+ */
+function parseLogicalAndExpression(tokens, indexObject) {
+    let token = tokens[indexObject.value];
+    if (!token) {
+        console.log(`Inside [parseLogicalAndExpression]: I did not see any token here. Exiting now...`);
+        exit(1);
+    } else {
+        let equalityExpression = parseEqualityExpression(tokens, indexObject);
+        token = tokens[indexObject.value];
+        while(token.tokenType == TokenTypes.LOGICAL_AND.name) {
+            indexObject.value++;
+            let nextEqualityExpression = parseEqualityExpression(tokens, indexObject);
+            equalityExpression = new Node(token.tokenType, token.value, [equalityExpression, nextEqualityExpression]);
+            token = tokens[indexObject.value];
+        }
+        return equalityExpression;
+    }
+}
+
+/**
+ * This function parses an expression as specified in the grammar
+ * @param {*} tokens The list of tokens
+ * @param {*} indexObject An object that holds the value of current index, as javascript
+ * doesn't support pass by reference for atomic integers 
+ */
+function parseExpression(tokens, indexObject) {
+    let token = tokens[indexObject.value];
+    if (!token) {
+        console.log(`Inside [parseExpression]: I did not see any token here. Exiting now...`);
+        exit(1);
+    } else {
+        let logicalAndExpression = parseLogicalAndExpression(tokens, indexObject);
+        token = tokens[indexObject.value];
+        while(token.tokenType == TokenTypes.LOGICAL_OR.name) {
+            indexObject.value++;
+            let nextLogicalAndExpression = parseLogicalAndExpression(tokens, indexObject);
+            logicalAndExpression = new Node(token.tokenType, token.value, [logicalAndExpression, nextLogicalAndExpression]);
+            token = tokens[indexObject.value];
+        }
+        return logicalAndExpression;
     }
 }
 
