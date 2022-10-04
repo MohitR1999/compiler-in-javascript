@@ -160,7 +160,7 @@ function tokenizer(data) {
             currentIndex++;
         }
     }
-    console.log(JSON.stringify(tokens));
+    // console.log(JSON.stringify(tokens));
     return tokens;
 }
 

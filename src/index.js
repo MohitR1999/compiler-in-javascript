@@ -1,7 +1,7 @@
 const fs = require('fs');
 const { exit } = require('process');
 const tokenizer = require('./tokenizer/tokenizer');
-const { parseProgram } = require('./parser/parser');
+const { Parser } = require('./parser/parser');
 const codeGenerator = require('./codeGenerator/codeGenerator');
 const path = require('node:path');
 
@@ -25,7 +25,8 @@ try {
         let indexObject = {
             value : 0
         }
-        let abstractSyntaxTree = parseProgram(tokens, indexObject);
+        let parser = new Parser(tokens);
+        let abstractSyntaxTree = parser.parseProgram();
         // generating the code
         const fileName = path.basename(inputFile).split('.')[0];
         codeGenerator(abstractSyntaxTree, fileName);
