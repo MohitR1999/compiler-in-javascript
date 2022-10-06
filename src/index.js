@@ -22,9 +22,6 @@ try {
         // get all the tokens in the source code
         let tokens = tokenizer(data);
         // now it's time to generate AST for the program
-        let indexObject = {
-            value : 0
-        }
         let parser = new Parser(tokens);
         let abstractSyntaxTree = parser.parseProgram();
         // generating the code
