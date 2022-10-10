@@ -1,5 +1,13 @@
 const Token = require('../constants/Token');
 const TokenTypes = require('../constants/tokenTypes');
+const { Logger } = require('../logger/Logger');
+
+const ERROR_MESSAGES = {
+    'UNKNOWN_IDENTIFIER': 'I saw an unknown identifier',
+    'UNEXPECTED_CHARACTER': 'I was not expecting this character',
+    'UNEXPECTED_TOKEN' : 'I was not expecting this token'
+}
+
 /**
  * This functions returns a list of tokens by scanning
  * through the whole source code
@@ -10,6 +18,7 @@ function tokenizer(data) {
     // Regular expressions for usage later
     let tokens = [];
     const alphanumericRegex = /[_a-zA-Z0-9]/;
+    const logger = new Logger('Tokenizer');
     for (let currentIndex = 0; currentIndex < data.length;) {
         let currentCharacter = data[currentIndex];
         // Checking for one character symbols
@@ -78,7 +87,7 @@ function tokenizer(data) {
             } else if (TokenTypes.INTEGER_LITERAL.value.test(word)) {
                 tokens.push(new Token(TokenTypes.INTEGER_LITERAL.name, word));
             } else {
-                console.log(`Unknown identifier: ${word}`);
+                logger.warn(`${ERROR_MESSAGES.UNKNOWN_IDENTIFIER}: ${word}`);
             }
         }
         // Checking for boolean logical operators
@@ -131,7 +140,7 @@ function tokenizer(data) {
                 }
                 // otherwise just log an error
                 else {
-                    console.log(`What's this: '${foundToken}' ? I know nothing like that...`);
+                    logger.warn(`${ERROR_MESSAGES.UNEXPECTED_TOKEN}: ${foundToken}`);
                 }
             } else {
                 // We encountered some other character, so it is a single character operator
@@ -150,7 +159,7 @@ function tokenizer(data) {
                 }
                 // else log as error
                 else {
-                    console.log(`Huh? What's this: '${currentCharacter}'? I have never seen anything like that...`);
+                    logger.warn(`${ERROR_MESSAGES.UNEXPECTED_CHARACTER}: ${nextCharacter} after ${currentCharacter}`);
                 }
             }
             currentIndex++;
