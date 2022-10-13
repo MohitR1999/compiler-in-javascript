@@ -3,6 +3,17 @@ const fs = require('fs');
 const { exec } = require('child_process');
 
 /**
+ * A simple label generator utility that returns a unique label
+ * everytime it is run
+ * @param {String} seed The value of a seeding string 
+ * @returns {String} A unique label
+ */
+function labelGenerator(seed) {
+    let random = Math.floor(Math.random() * 10000);
+    return `_${seed}${random}`;
+}
+
+/**
  * This function generates the assembly code for a particular node of AST
  * @param {Object} treeNode The node of AST
  */
@@ -184,7 +195,46 @@ function generateAssemblyForTreeNode(treeNode) {
         assemblyString += `\tsetge     %al\n`;
         treeNode.assembly = assemblyString;
     }
+    // code generation for logical OR operator
+    else if (treeNode.type == TokenTypes.LOGICAL_OR.name) {
+        let e1AssemblyString = treeNode.children[0].assembly;
+        let e2AssemblyString = treeNode.children[1].assembly;
+        let assemblyString = '';
+        assemblyString += e1AssemblyString;
+        assemblyString += `\tcmp    $0, %rax\n`;
+        let jumpClause = labelGenerator('clause');
+        let endClause = labelGenerator('end');
+        assemblyString += `\tje    ${jumpClause}\n`;
+        assemblyString += `\tmov    $1, %rax\n`;
+        assemblyString += `\tjmp    ${endClause}\n`;
+        assemblyString += `${jumpClause}:\n`;
+        assemblyString += e2AssemblyString;
+        assemblyString += `\tcmp    $0, %rax\n`;
+        assemblyString += `\tmov    $0, %rax\n`;
+        assemblyString += `\tsetne  %al\n`;
+        assemblyString += `${endClause}:\n`;
+        treeNode.assembly = assemblyString;
+    }
 
+    // code generation for logical AND operator
+    else if (treeNode.type == TokenTypes.LOGICAL_AND.name) {
+        let e1AssemblyString = treeNode.children[0].assembly;
+        let e2AssemblyString = treeNode.children[1].assembly;
+        let assemblyString = '';
+        assemblyString += e1AssemblyString;
+        assemblyString += `\tcmp    $0, %rax\n`;
+        let jumpClause = labelGenerator('clause');
+        let endClause = labelGenerator('end');
+        assemblyString += `\tjne    ${jumpClause}\n`;
+        assemblyString += `\tjmp    ${endClause}\n`;
+        assemblyString += `${jumpClause}:\n`;
+        assemblyString += e2AssemblyString;
+        assemblyString += `\tcmp    $0, %rax\n`;
+        assemblyString += `\tmov    $0, %rax\n`;
+        assemblyString += `\tsetne  %al\n`;
+        assemblyString += `${endClause}:\n`;
+        treeNode.assembly = assemblyString;
+    }
     else {
         let assemblyString = `\t.globl ${treeNode.children[0].value}\n` + treeNode.children[0].assembly;
         treeNode.assembly = assemblyString;
