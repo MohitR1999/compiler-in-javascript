@@ -96,7 +96,95 @@ function generateAssemblyForTreeNode(treeNode) {
         assemblyString += `\tidiv   %rcx\n`;
         treeNode.assembly = assemblyString;
     }
-    
+    // code generation for equal to operator
+    else if (treeNode.type == TokenTypes.EQUAL_TO.name) {
+        let e1AssemblyString = treeNode.children[0].assembly;
+        let e2AssemblyString = treeNode.children[1].assembly;
+        let assemblyString = '';
+        assemblyString += e1AssemblyString;
+        assemblyString += `\tpush    %rax\n`;
+        assemblyString += e2AssemblyString;
+        assemblyString += `\tpop     %rcx\n`;
+        assemblyString += `\tcmp     %rax, %rcx\n`;
+        assemblyString += `\tmov     $0, %rax\n`;
+        assemblyString += `\tsete     %al\n`;
+        treeNode.assembly = assemblyString;
+    }
+    // code generation for not equal to operator
+    else if (treeNode.type == TokenTypes.NOT_EQUAL_TO.name) {
+        let e1AssemblyString = treeNode.children[0].assembly;
+        let e2AssemblyString = treeNode.children[1].assembly;
+        let assemblyString = '';
+        assemblyString += e1AssemblyString;
+        assemblyString += `\tpush    %rax\n`;
+        assemblyString += e2AssemblyString;
+        assemblyString += `\tpop     %rcx\n`;
+        assemblyString += `\tcmp     %rax, %rcx\n`;
+        assemblyString += `\tmov     $0, %rax\n`;
+        assemblyString += `\tsetne     %al\n`;
+        treeNode.assembly = assemblyString;
+    }
+
+    // code generation for less than operator
+    else if (treeNode.type == TokenTypes.LESS_THAN.name) {
+        let e1AssemblyString = treeNode.children[0].assembly;
+        let e2AssemblyString = treeNode.children[1].assembly;
+        let assemblyString = '';
+        assemblyString += e1AssemblyString;
+        assemblyString += `\tpush    %rax\n`;
+        assemblyString += e2AssemblyString;
+        assemblyString += `\tpop     %rcx\n`;
+        assemblyString += `\tcmp     %rax, %rcx\n`;
+        assemblyString += `\tmov     $0, %rax\n`;
+        assemblyString += `\tsetl     %al\n`;
+        treeNode.assembly = assemblyString;
+    }
+
+    // code generation for less than or equal operator
+    else if (treeNode.type == TokenTypes.LESS_THAN_OR_EQUAL_TO.name) {
+        let e1AssemblyString = treeNode.children[0].assembly;
+        let e2AssemblyString = treeNode.children[1].assembly;
+        let assemblyString = '';
+        assemblyString += e1AssemblyString;
+        assemblyString += `\tpush    %rax\n`;
+        assemblyString += e2AssemblyString;
+        assemblyString += `\tpop     %rcx\n`;
+        assemblyString += `\tcmp     %rax, %rcx\n`;
+        assemblyString += `\tmov     $0, %rax\n`;
+        assemblyString += `\tsetle     %al\n`;
+        treeNode.assembly = assemblyString;
+    }
+
+    // code generation for greater than operator
+    else if (treeNode.type == TokenTypes.LESS_THAN_OR_EQUAL_TO.name) {
+        let e1AssemblyString = treeNode.children[0].assembly;
+        let e2AssemblyString = treeNode.children[1].assembly;
+        let assemblyString = '';
+        assemblyString += e1AssemblyString;
+        assemblyString += `\tpush    %rax\n`;
+        assemblyString += e2AssemblyString;
+        assemblyString += `\tpop     %rcx\n`;
+        assemblyString += `\tcmp     %rax, %rcx\n`;
+        assemblyString += `\tmov     $0, %rax\n`;
+        assemblyString += `\tsetg     %al\n`;
+        treeNode.assembly = assemblyString;
+    }
+
+    // code generation for greater than or equal to operator
+    else if (treeNode.type == TokenTypes.LESS_THAN_OR_EQUAL_TO.name) {
+        let e1AssemblyString = treeNode.children[0].assembly;
+        let e2AssemblyString = treeNode.children[1].assembly;
+        let assemblyString = '';
+        assemblyString += e1AssemblyString;
+        assemblyString += `\tpush    %rax\n`;
+        assemblyString += e2AssemblyString;
+        assemblyString += `\tpop     %rcx\n`;
+        assemblyString += `\tcmp     %rax, %rcx\n`;
+        assemblyString += `\tmov     $0, %rax\n`;
+        assemblyString += `\tsetge     %al\n`;
+        treeNode.assembly = assemblyString;
+    }
+
     else {
         let assemblyString = `\t.globl ${treeNode.children[0].value}\n` + treeNode.children[0].assembly;
         treeNode.assembly = assemblyString;
