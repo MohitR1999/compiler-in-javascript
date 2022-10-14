@@ -167,7 +167,7 @@ function generateAssemblyForTreeNode(treeNode) {
     }
 
     // code generation for greater than operator
-    else if (treeNode.type == TokenTypes.LESS_THAN_OR_EQUAL_TO.name) {
+    else if (treeNode.type == TokenTypes.GREATER_THAN.name) {
         let e1AssemblyString = treeNode.children[0].assembly;
         let e2AssemblyString = treeNode.children[1].assembly;
         let assemblyString = '';
@@ -182,7 +182,7 @@ function generateAssemblyForTreeNode(treeNode) {
     }
 
     // code generation for greater than or equal to operator
-    else if (treeNode.type == TokenTypes.LESS_THAN_OR_EQUAL_TO.name) {
+    else if (treeNode.type == TokenTypes.GREATER_THAN_OR_EQUAL_TO.name) {
         let e1AssemblyString = treeNode.children[0].assembly;
         let e2AssemblyString = treeNode.children[1].assembly;
         let assemblyString = '';

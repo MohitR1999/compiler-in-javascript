@@ -12,7 +12,7 @@
                 "<node_internals>/**"
             ],
             "program": "${workspaceFolder}/src/index.js",
-            "args": ["${workspaceFolder}/input/stage_4/valid/ne_true.c"]
+            "args": ["${workspaceFolder}/input/stage_4/valid/ge_true.c"]
         }
     ]
 }

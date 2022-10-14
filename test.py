@@ -16,7 +16,7 @@ class bcolors:
 
 
 def run_test(testFile, expectedReturnCode):
-    print(f"Running test: {testFile}")
+    print(f"Running test: {testFile}------------------------------------------\n")
     original_directory = os.getcwd()
     code_directory = os.path.join(os.getcwd(), "src")
     # Change directory
@@ -28,6 +28,7 @@ def run_test(testFile, expectedReturnCode):
     else:
         print(bcolors.FAIL + "Test failed ❌" + bcolors.ENDC)
     # Change directory back
+    print(f"This testcase finished--------------------------------------------\n")
     os.chdir(original_directory)
 
 def run_tests(testDirectory, testType, expectedReturnCode):

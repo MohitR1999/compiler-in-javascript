@@ -68,7 +68,7 @@ class Parser {
         else if (token.tokenType == TokenTypes.OPEN_PARENTHESES.name) {
             this.currentIndex++;
             // parse expression inside
-            let expression = this.parseAdditiveExpression();
+            let expression = this.parseExpression();
             // check if closing parentheses are there
             token = this.tokens[this.currentIndex];
             this.currentIndex++;

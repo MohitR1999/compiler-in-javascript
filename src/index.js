@@ -92,7 +92,7 @@ function generatePrettyPrintForNode(treeNode) {
         let operatorValue = treeNode.value;
         let operatorType = treeNode.type;
         let operand1 = treeNode.children[0].prettyPrintString;
-        let operand2 = treeNode.children[0].prettyPrintString;
+        let operand2 = treeNode.children[1].prettyPrintString;
         let prettyPrintString = `${operand1} ${operatorType}<${operatorValue}> ${operand2}`;
         treeNode.prettyPrintString = prettyPrintString;
     }
