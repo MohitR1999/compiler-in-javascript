@@ -27,8 +27,7 @@ class Compiler {
 Options:
     -h, --help      Print help text
     -p, --pretty    Pretty print the abstract syntax tree for the given program
-    -o, --output    Specify the output file to be written to
-        `;
+    -o, --output    Specify the output file to be written to`;
     }
 
     parseArguments() {
