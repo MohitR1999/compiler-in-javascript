@@ -157,6 +157,11 @@ function tokenizer(data) {
                     tokens.push(new Token(TokenTypes.LOGICAL_NEGATION.name, currentCharacter));
                     currentIndex++;
                 }
+                // checking for assignment operator
+                else if (currentCharacter == TokenTypes.ASSIGNMENT.value) {
+                    tokens.push(new Token(TokenTypes.ASSIGNMENT.name, currentCharacter));
+                    currentIndex++;
+                }
                 // else log as error
                 else {
                     logger.warn(`${ERROR_MESSAGES.UNEXPECTED_CHARACTER}: ${nextCharacter} after ${currentCharacter}`);

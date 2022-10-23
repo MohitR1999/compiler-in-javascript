@@ -6,15 +6,16 @@ const Token = require('../constants/Token');
  * All the non terminals would start with a capital letter,
  * and all the terminals would start with a small letter
  * Program -> Function_Declaration
- * Function_Declaration -> "int" function_name "(" ")" "{" Statement "}"
- * Statement -> "return" Expression ";"
- * Expression -> LogicalAndExpression { "||" LogicalAndExpression }
+ * Function_Declaration -> "int" FunctionName "(" ")" "{" { Statement } "}"
+ * Statement -> "return" Expression ";" | Expression ";" | "int" Identifier [ "=" Expression ] ";"
+ * Expression -> Identifier "=" Expression | LogicalOrExpression
+ * LogicalOrExpression -> LogicalAndExpression { "||" LogicalAndExpression }
  * LogicalAndExpression -> EqualityExpression { "&&" EqualityExpression }
  * EqualityExpression -> RelationalExpression { ( "!=" | "==" ) RelationalExpression }
  * RelationalExpression -> AdditiveExpression { ( "<" | ">" | "<=" | ">=" ) AdditiveExpression }
  * AdditiveExpression -> Term { ("+" | "-") Term }
  * Term -> Factor { ("*" | "/") Factor }
- * Factor -> "(" Expression ")" | UnaryOperator Factor | integer
+ * Factor -> "(" Expression ")" | UnaryOperator Factor | integer | Identifier
  * UnaryOperator -> "-" | "~" | "!"
  */
 
@@ -88,7 +89,13 @@ class Parser {
         else if (token.tokenType == TokenTypes.INTEGER_LITERAL.name) {
             this.currentIndex++;
             return new Node(token.tokenType, token.value, []);
-        } else {
+        }
+        // check if it is an identifier
+        else if (token.tokenType == TokenTypes.IDENTIFIER.name) {
+            this.currentIndex++;
+            return new Node(token.tokenType, token.value, []);
+        }
+        else {
             console.log(`Duh! What's this character? I didn't expect this: ${token.value}. Exiting...`);
             exit(1);
         }
@@ -204,12 +211,12 @@ class Parser {
     }
 
     /**
-    * This function parses an expression as specified in the grammar
+    * This function parses a logical OR expression as specified in the grammar
     */
-    parseExpression() {
+    parseLogicalOrExpression() {
         let token = this.tokens[this.currentIndex];
         if (!token) {
-            console.log(`Inside [parseExpression]: I did not see any token here. Exiting now...`);
+            console.log(`Inside [parseLogicalOrExpression]: I did not see any token here. Exiting now...`);
             exit(1);
         } else {
             let logicalAndExpression = this.parseLogicalAndExpression();
@@ -224,6 +231,24 @@ class Parser {
         }
     }
 
+    parseExpression() {
+        let token = this.tokens[this.currentIndex];
+        if (!token) {
+            console.log(`Inside [parseExpression]: I did not see any token here. Exiting now...`);
+            exit(1);
+        } else if (token.tokenType == TokenTypes.IDENTIFIER.name) {
+            let identifer = new Node(token.tokenType, token.value, []);
+            this.currentIndex++;
+            token = this.tokens[this.currentIndex];
+            this.currentIndex++;
+            let expression = this.parseExpression();
+            let identifierNode = new Node(token.tokenType, token.value, [identifer, expression]);
+            return identifierNode;
+        } else {
+            return this.parseLogicalOrExpression();
+        }
+    }
+
     /**
      * This function parses statements
      */
@@ -232,10 +257,7 @@ class Parser {
         if (!token) {
             console.log('Ahh there is no statement! Exiting now...');
             exit(1);
-        } else if (token.tokenType != TokenTypes.RETURN_KEYWORD.name) {
-            console.log(`Why did you forget the return keyword here? I'm just gonna exit now...`);
-            exit(1);
-        } else {
+        } else if (token.tokenType == TokenTypes.RETURN_KEYWORD.name) {
             // Return keyword was found, hence next we should have an integer
             this.currentIndex++;
             token = this.tokens[this.currentIndex];
@@ -245,7 +267,7 @@ class Parser {
             } else {
                 // This would return the expression AND it would increment
                 // the current index
-                let expression = this.parseExpression();
+                let expression = this.parseLogicalOrExpression();
                 let statement = new Node(TokenTypes.STATEMENT.name, 'return', [expression]);
                 // if we don't encounter a semicolon now, it means there is 
                 // syntax error
@@ -261,6 +283,40 @@ class Parser {
                     return statement;
                 }
             }
+        } else if (token.tokenType == TokenTypes.INT_KEYWORD.name) {
+            this.currentIndex++;
+            token = this.tokens[this.currentIndex];
+            if (token.tokenType != TokenTypes.IDENTIFIER.name) {
+                console.log(`Inside [parseStatement]: I was expecting a variable name, but didn't get that. Exiting...`);
+                exit(1);
+            } else {
+                let identifer = new Node(token.tokenType, token.value, []);
+                this.currentIndex++;
+                token = this.tokens[this.currentIndex];
+                if (token.tokenType == TokenTypes.SEMICOLON.name) {
+                    this.currentIndex++;
+                    return new Node(TokenTypes.STATEMENT.name, 'declaration', [identifer]);
+                } else if (token.tokenType == TokenTypes.ASSIGNMENT.name) {
+                    this.currentIndex++;
+                    let expression = this.parseExpression();
+                    token = this.tokens[this.currentIndex];
+                    if (token.tokenType != TokenTypes.SEMICOLON.name) {
+                        console.log('Inside [parseStatement]: I was expecting a semicolon, but did not find any. Exiting...');
+                        exit(1);
+                    }
+                    this.currentIndex++;
+                    return new Node(TokenTypes.STATEMENT.name, 'assignment', [identifer, expression]);
+                }
+            }
+        } else {
+            let expression = this.parseExpression();
+            token = this.tokens[this.currentIndex];
+            if (token.tokenType != TokenTypes.SEMICOLON.name) {
+                console.log('Inside [parseStatement]: I was expecting a semicolon, but did not find any. Exiting...');
+                exit(1);
+            }
+            this.currentIndex++;
+            return new Node(TokenTypes.STATEMENT.name, 'expression', [expression]);
         }
     }
 
@@ -331,21 +387,32 @@ class Parser {
                         } else {
                             // Opening curly brace found, proceeding ahead
                             this.currentIndex++;
-                            let statement = this.parseStatement();
-                            // parseStatement would increment the current index, so reading ahead
+                            let functionDeclaration = new Node(TokenTypes.FUNCTION_DECLARATION.name, functionName, []);
                             token = this.tokens[this.currentIndex];
-                            if (!token) {
-                                // Unexpected end of input
-                                console.log('Ahhh! How many times do I need to repeat that I do not like incomplete programs! Exiting...');
-                                exit(1);
-                            } else if (token.tokenType != TokenTypes.CLOSE_CURLY_BRACE.name) {
-                                // Closing curly brace not found
-                                console.log(`I was hoping for a closing curly brace }, but as you did not provide that, Imma head out...`);
-                                exit(1);
-                            } else {
-                                let functionDeclaration = new Node(TokenTypes.FUNCTION_DECLARATION.name, functionName, [statement]);
+                            if (token.tokenType == TokenTypes.CLOSE_CURLY_BRACE.name) {
                                 return functionDeclaration;
                             }
+                            let statement = this.parseStatement();
+                            // parseStatement would increment the current index, so reading ahead
+                            functionDeclaration.children.push(statement);
+                            while (token.tokenType != TokenTypes.CLOSE_CURLY_BRACE.name) {
+                                if (!token) {
+                                    // Unexpected end of input
+                                    console.log(`Inside [parseFunction]: Unexpected End of input. Exiting...`);
+                                    exit(1);
+                                }
+                                statement = this.parseStatement();
+                                token = this.tokens[this.currentIndex];
+                                functionDeclaration.children.push(statement);
+                            }
+
+                            if (token.tokenType != TokenTypes.CLOSE_CURLY_BRACE.name) {
+                                console.log(`Inside [parseFunction]: Did not get a closing curly brace. Exiting...`);
+                                exit(1);
+                            }
+
+                            return functionDeclaration;
+
                         }
                     }
                 }

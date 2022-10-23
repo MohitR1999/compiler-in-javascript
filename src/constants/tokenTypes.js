@@ -115,6 +115,14 @@ const GREATER_THAN_OR_EQUAL_TO = {
     value : ">="
 };
 
+/**
+ * Assignment operator
+ */
+const ASSIGNMENT = {
+    name : "ASSIGNMENT",
+    value : "="
+};
+
 const IDENTIFIER = {
     name : "IDENTIFIER",
     value : new RegExp('[_a-zA-Z]\w*')
@@ -178,3 +186,4 @@ module.exports.LESS_THAN = LESS_THAN;
 module.exports.LESS_THAN_OR_EQUAL_TO = LESS_THAN_OR_EQUAL_TO;
 module.exports.GREATER_THAN = GREATER_THAN;
 module.exports.GREATER_THAN_OR_EQUAL_TO = GREATER_THAN_OR_EQUAL_TO;
+module.exports.ASSIGNMENT = ASSIGNMENT;
