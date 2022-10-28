@@ -1,0 +1,109 @@
+{
+  "stage1": [
+    {
+      "testCaseNumber": 1,
+      "inputFile": "../../input/stage_1/valid/multi_digit.c",
+      "outputFileJcc": "../../output/stage_1/valid/multi_digit.s",
+      "executableJcc": "../../output/stage_1/valid/multi_digit.out",
+      "executableGcc": "../../output/stage_1/valid/multi_digit.gcc.out"
+    },
+
+    {
+      "testCaseNumber": 2,
+      "inputFile": "../../input/stage_1/valid/newlines.c",
+      "outputFileJcc": "../../output/stage_1/valid/newlines.s",
+      "executableJcc": "../../output/stage_1/valid/newlines.out",
+      "executableGcc": "../../output/stage_1/valid/newlines.gcc.out"
+    },
+
+    {
+      "testCaseNumber": 3,
+      "inputFile": "../../input/stage_1/valid/no_newlines.c",
+      "outputFileJcc": "../../output/stage_1/valid/no_newlines.s",
+      "executableJcc": "../../output/stage_1/valid/no_newlines.out",
+      "executableGcc": "../../output/stage_1/valid/no_newlines.gcc.out"
+    },
+
+    {
+      "testCaseNumber": 4,
+      "inputFile": "../../input/stage_1/valid/return_0.c",
+      "outputFileJcc": "../../output/stage_1/valid/return_0.s",
+      "executableJcc": "../../output/stage_1/valid/return_0.out",
+      "executableGcc": "../../output/stage_1/valid/return_0.gcc.out"
+    },
+
+    {
+      "testCaseNumber": 5,
+      "inputFile": "../../input/stage_1/valid/return_2.c",
+      "outputFileJcc": "../../output/stage_1/valid/return_2.s",
+      "executableJcc": "../../output/stage_1/valid/return_2.out",
+      "executableGcc": "../../output/stage_1/valid/return_2.gcc.out"
+    },
+
+    {
+      "testCaseNumber": 6,
+      "inputFile": "../../input/stage_1/valid/spaces.c",
+      "outputFileJcc": "../../output/stage_1/valid/spaces.s",
+      "executableJcc": "../../output/stage_1/valid/spaces.out",
+      "executableGcc": "../../output/stage_1/valid/spaces.gcc.out"
+    }
+  ],
+
+  "stage2": [
+    {
+      "testCaseNumber": 1,
+      "inputFile": "../../input/stage_2/valid/bitwise_zero.c",
+      "outputFileJcc": "../../output/stage_2/valid/bitwise_zero.s",
+      "executableJcc": "../../output/stage_2/valid/bitwise_zero.out",
+      "executableGcc": "../../output/stage_2/valid/bitwise_zero.gcc.out"
+    },
+
+    {
+      "testCaseNumber": 2,
+      "inputFile": "../../input/stage_2/valid/bitwise.c",
+      "outputFileJcc": "../../output/stage_2/valid/bitwise.s",
+      "executableJcc": "../../output/stage_2/valid/bitwise.out",
+      "executableGcc": "../../output/stage_2/valid/bitwise.gcc.out"
+    },
+
+    {
+      "testCaseNumber": 3,
+      "inputFile": "../../input/stage_2/valid/neg.c",
+      "outputFileJcc": "../../output/stage_2/valid/neg.s",
+      "executableJcc": "../../output/stage_2/valid/neg.out",
+      "executableGcc": "../../output/stage_2/valid/neg.gcc.out"
+    },
+
+    {
+      "testCaseNumber": 4,
+      "inputFile": "../../input/stage_2/valid/nested_ops_2.c",
+      "outputFileJcc": "../../output/stage_2/valid/nested_ops_2.s",
+      "executableJcc": "../../output/stage_2/valid/nested_ops_2.out",
+      "executableGcc": "../../output/stage_2/valid/nested_ops_2.gcc.out"
+    },
+
+    {
+      "testCaseNumber": 5,
+      "inputFile": "../../input/stage_2/valid/nested_ops.c",
+      "outputFileJcc": "../../output/stage_2/valid/nested_ops.s",
+      "executableJcc": "../../output/stage_2/valid/nested_ops.out",
+      "executableGcc": "../../output/stage_2/valid/nested_ops.gcc.out"
+    },
+
+    {
+      "testCaseNumber": 6,
+      "inputFile": "../../input/stage_2/valid/not_five.c",
+      "outputFileJcc": "../../output/stage_2/valid/not_five.s",
+      "executableJcc": "../../output/stage_2/valid/not_five.out",
+      "executableGcc": "../../output/stage_2/valid/not_five.gcc.out"
+    },
+
+    {
+      "testCaseNumber": 7,
+      "inputFile": "../../input/stage_2/valid/not_zero.c",
+      "outputFileJcc": "../../output/stage_2/valid/not_zero.s",
+      "executableJcc": "../../output/stage_2/valid/not_zero.out",
+      "executableGcc": "../../output/stage_2/valid/not_zero.gcc.out"
+    }
+  ]
+}
