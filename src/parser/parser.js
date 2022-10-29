@@ -393,8 +393,9 @@ class Parser {
                                 return functionDeclaration;
                             }
                             let statement = this.parseStatement();
-                            // parseStatement would increment the current index, so reading ahead
                             functionDeclaration.children.push(statement);
+                            // parseStatement would increment the current index, so reading ahead
+                            token = this.tokens[this.currentIndex];
                             while (token.tokenType != TokenTypes.CLOSE_CURLY_BRACE.name) {
                                 if (!token) {
                                     // Unexpected end of input

@@ -155,12 +155,10 @@ function tokenizer(data) {
                 // Checking for logical negation operator
                 else if (currentCharacter == TokenTypes.LOGICAL_NEGATION.value) {
                     tokens.push(new Token(TokenTypes.LOGICAL_NEGATION.name, currentCharacter));
-                    currentIndex++;
                 }
                 // checking for assignment operator
                 else if (currentCharacter == TokenTypes.ASSIGNMENT.value) {
                     tokens.push(new Token(TokenTypes.ASSIGNMENT.name, currentCharacter));
-                    currentIndex++;
                 }
                 // else log as error
                 else {
