@@ -39,10 +39,21 @@ def runExecutablesAndCompareResults(testcaseNumber, executableFromJccAssembly, e
     p1 = subprocess.run([f"{executableFromJccAssembly}"])
     p2 = subprocess.run([f"{executableFromGccDirectly}"])
     if (p1.returncode != p2.returncode):
-        print(f"{BackgroundColor.BOLD}{BackgroundColor.FAIL}[❌] Test case failed: # {testcaseNumber}{BackgroundColor.ENDC}")
+        print(f"{BackgroundColor.BOLD}{BackgroundColor.FAIL}[❌] Test case failed: #{testcaseNumber}{BackgroundColor.ENDC}")
         sys.exit(1)
     else:
-        print(f"{BackgroundColor.BOLD}{BackgroundColor.OKGREEN}[✔] Test case passed: # {testcaseNumber}{BackgroundColor.ENDC}")
+        print(f"{BackgroundColor.BOLD}{BackgroundColor.OKGREEN}[✔] Test case passed: #{testcaseNumber}{BackgroundColor.ENDC}")
+
+def runValidTestCase(testcase):
+    inputFile = testcase['inputFile']
+    outputAssemblyFile = testcase['outputFileJcc']
+    testcaseNumber = testcase['testCaseNumber']
+    executableGcc = testcase['executableGcc']
+    executableJcc = testcase['executableJcc']
+    compileToAssembly(testcaseNumber, inputFile, outputAssemblyFile)
+    compileToExecutableDirectly(testcaseNumber, inputFile, executableGcc)
+    compileToExecutableUsingJccOutputAssembly(testcaseNumber, outputAssemblyFile, executableJcc)
+    runExecutablesAndCompareResults(testcaseNumber, executableJcc, executableGcc)
 
 if __name__ == "__main__":
     testcaseFile = open('./testdata.json')
@@ -52,13 +63,5 @@ if __name__ == "__main__":
         testsArray = data[stage]
         for testcase in testsArray:
             # Run test
-            inputFile = testcase['inputFile']
-            outputAssemblyFile = testcase['outputFileJcc']
-            testcaseNumber = testcase['testCaseNumber']
-            executableGcc = testcase['executableGcc']
-            executableJcc = testcase['executableJcc']
-            compileToAssembly(testcaseNumber, inputFile, outputAssemblyFile)
-            compileToExecutableDirectly(testcaseNumber, inputFile, executableGcc)
-            compileToExecutableUsingJccOutputAssembly(testcaseNumber, outputAssemblyFile, executableJcc)
-            runExecutablesAndCompareResults(testcaseNumber, executableJcc, executableGcc)
+            runValidTestCase(testcase)
         print(f"{BackgroundColor.BOLD}{BackgroundColor.OKBLUE}Test suite for stage: {stage} finished...{BackgroundColor.ENDC}")

@@ -105,5 +105,265 @@
       "executableJcc": "../../output/stage_2/valid/not_zero.out",
       "executableGcc": "../../output/stage_2/valid/not_zero.gcc.out"
     }
+  ],
+
+  "stage3": [
+    {
+      "testCaseNumber": 1,
+      "inputFile": "../../input/stage_3/valid/add.c",
+      "outputFileJcc": "../../output/stage_3/valid/add.s",
+      "executableJcc": "../../output/stage_3/valid/add.out",
+      "executableGcc": "../../output/stage_3/valid/add.gcc.out"
+    },
+
+    {
+      "testCaseNumber": 2,
+      "inputFile": "../../input/stage_3/valid/associativity_2.c",
+      "outputFileJcc": "../../output/stage_3/valid/associativity_2.s",
+      "executableJcc": "../../output/stage_3/valid/associativity_2.out",
+      "executableGcc": "../../output/stage_3/valid/associativity_2.gcc.out"
+    },
+
+    {
+      "testCaseNumber": 3,
+      "inputFile": "../../input/stage_3/valid/associativity.c",
+      "outputFileJcc": "../../output/stage_3/valid/associativity.s",
+      "executableJcc": "../../output/stage_3/valid/associativity.out",
+      "executableGcc": "../../output/stage_3/valid/associativity.gcc.out"
+    },
+
+    {
+      "testCaseNumber": 4,
+      "inputFile": "../../input/stage_3/valid/div_neg.c",
+      "outputFileJcc": "../../output/stage_3/valid/div_neg.s",
+      "executableJcc": "../../output/stage_3/valid/div_neg.out",
+      "executableGcc": "../../output/stage_3/valid/div_neg.gcc.out"
+    },
+
+    {
+      "testCaseNumber": 5,
+      "inputFile": "../../input/stage_3/valid/div.c",
+      "outputFileJcc": "../../output/stage_3/valid/div.s",
+      "executableJcc": "../../output/stage_3/valid/div.out",
+      "executableGcc": "../../output/stage_3/valid/div.gcc.out"
+    },
+
+    {
+      "testCaseNumber": 6,
+      "inputFile": "../../input/stage_3/valid/mult.c",
+      "outputFileJcc": "../../output/stage_3/valid/mult.s",
+      "executableJcc": "../../output/stage_3/valid/mult.out",
+      "executableGcc": "../../output/stage_3/valid/mult.gcc.out"
+    },
+
+    {
+      "testCaseNumber": 7,
+      "inputFile": "../../input/stage_3/valid/parens.c",
+      "outputFileJcc": "../../output/stage_3/valid/parens.s",
+      "executableJcc": "../../output/stage_3/valid/parens.out",
+      "executableGcc": "../../output/stage_3/valid/parens.gcc.out"
+    },
+
+    {
+      "testCaseNumber": 8,
+      "inputFile": "../../input/stage_3/valid/precedence.c",
+      "outputFileJcc": "../../output/stage_3/valid/precedence.s",
+      "executableJcc": "../../output/stage_3/valid/precedence.out",
+      "executableGcc": "../../output/stage_3/valid/precedence.gcc.out"
+    },
+
+    {
+      "testCaseNumber": 9,
+      "inputFile": "../../input/stage_3/valid/sub_neg.c",
+      "outputFileJcc": "../../output/stage_3/valid/sub_neg.s",
+      "executableJcc": "../../output/stage_3/valid/sub_neg.out",
+      "executableGcc": "../../output/stage_3/valid/sub_neg.gcc.out"
+    },
+
+    {
+      "testCaseNumber": 10,
+      "inputFile": "../../input/stage_3/valid/sub.c",
+      "outputFileJcc": "../../output/stage_3/valid/sub.s",
+      "executableJcc": "../../output/stage_3/valid/sub.out",
+      "executableGcc": "../../output/stage_3/valid/sub.gcc.out"
+    },
+
+    {
+      "testCaseNumber": 11,
+      "inputFile": "../../input/stage_3/valid/unop_add.c",
+      "outputFileJcc": "../../output/stage_3/valid/unop_add.s",
+      "executableJcc": "../../output/stage_3/valid/unop_add.out",
+      "executableGcc": "../../output/stage_3/valid/unop_add.gcc.out"
+    },
+
+    {
+      "testCaseNumber": 12,
+      "inputFile": "../../input/stage_3/valid/unop_parens.c",
+      "outputFileJcc": "../../output/stage_3/valid/unop_parens.s",
+      "executableJcc": "../../output/stage_3/valid/unop_parens.out",
+      "executableGcc": "../../output/stage_3/valid/unop_parens.gcc.out"
+    }
+  ],
+
+  "stage4": [
+    {
+      "testCaseNumber": 1,
+      "inputFile": "../../input/stage_4/valid/and_false.c",
+      "outputFileJcc": "../../output/stage_4/valid/and_false.s",
+      "executableJcc": "../../output/stage_4/valid/and_false.out",
+      "executableGcc": "../../output/stage_4/valid/and_false.gcc.out"
+    },
+
+    {
+      "testCaseNumber": 2,
+      "inputFile": "../../input/stage_4/valid/and_true.c",
+      "outputFileJcc": "../../output/stage_4/valid/and_true.s",
+      "executableJcc": "../../output/stage_4/valid/and_true.out",
+      "executableGcc": "../../output/stage_4/valid/and_true.gcc.out"
+    },
+
+    {
+      "testCaseNumber": 3,
+      "inputFile": "../../input/stage_4/valid/eq_false.c",
+      "outputFileJcc": "../../output/stage_4/valid/eq_false.s",
+      "executableJcc": "../../output/stage_4/valid/eq_false.out",
+      "executableGcc": "../../output/stage_4/valid/eq_false.gcc.out"
+    },
+
+    {
+      "testCaseNumber": 4,
+      "inputFile": "../../input/stage_4/valid/eq_true.c",
+      "outputFileJcc": "../../output/stage_4/valid/eq_true.s",
+      "executableJcc": "../../output/stage_4/valid/eq_true.out",
+      "executableGcc": "../../output/stage_4/valid/eq_true.gcc.out"
+    },
+
+    {
+      "testCaseNumber": 5,
+      "inputFile": "../../input/stage_4/valid/ge_false.c",
+      "outputFileJcc": "../../output/stage_4/valid/ge_false.s",
+      "executableJcc": "../../output/stage_4/valid/ge_false.out",
+      "executableGcc": "../../output/stage_4/valid/ge_false.gcc.out"
+    },
+
+    {
+      "testCaseNumber": 6,
+      "inputFile": "../../input/stage_4/valid/ge_true.c",
+      "outputFileJcc": "../../output/stage_4/valid/ge_true.s",
+      "executableJcc": "../../output/stage_4/valid/ge_true.out",
+      "executableGcc": "../../output/stage_4/valid/ge_true.gcc.out"
+    },
+
+    {
+      "testCaseNumber": 7,
+      "inputFile": "../../input/stage_4/valid/gt_false.c",
+      "outputFileJcc": "../../output/stage_4/valid/gt_false.s",
+      "executableJcc": "../../output/stage_4/valid/gt_false.out",
+      "executableGcc": "../../output/stage_4/valid/gt_false.gcc.out"
+    },
+
+    {
+      "testCaseNumber": 8,
+      "inputFile": "../../input/stage_4/valid/gt_true.c",
+      "outputFileJcc": "../../output/stage_4/valid/gt_true.s",
+      "executableJcc": "../../output/stage_4/valid/gt_true.out",
+      "executableGcc": "../../output/stage_4/valid/gt_true.gcc.out"
+    },
+
+    {
+      "testCaseNumber": 9,
+      "inputFile": "../../input/stage_4/valid/le_false.c",
+      "outputFileJcc": "../../output/stage_4/valid/le_false.s",
+      "executableJcc": "../../output/stage_4/valid/le_false.out",
+      "executableGcc": "../../output/stage_4/valid/le_false.gcc.out"
+    },
+
+    {
+      "testCaseNumber": 10,
+      "inputFile": "../../input/stage_4/valid/le_true.c",
+      "outputFileJcc": "../../output/stage_4/valid/le_true.s",
+      "executableJcc": "../../output/stage_4/valid/le_true.out",
+      "executableGcc": "../../output/stage_4/valid/le_true.gcc.out"
+    },
+
+    {
+      "testCaseNumber": 11,
+      "inputFile": "../../input/stage_4/valid/lt_false.c",
+      "outputFileJcc": "../../output/stage_4/valid/lt_false.s",
+      "executableJcc": "../../output/stage_4/valid/lt_false.out",
+      "executableGcc": "../../output/stage_4/valid/lt_false.gcc.out"
+    },
+
+    {
+      "testCaseNumber": 12,
+      "inputFile": "../../input/stage_4/valid/lt_true.c",
+      "outputFileJcc": "../../output/stage_4/valid/lt_true.s",
+      "executableJcc": "../../output/stage_4/valid/lt_true.out",
+      "executableGcc": "../../output/stage_4/valid/lt_true.gcc.out"
+    },
+
+    {
+      "testCaseNumber": 13,
+      "inputFile": "../../input/stage_4/valid/ne_false.c",
+      "outputFileJcc": "../../output/stage_4/valid/ne_false.s",
+      "executableJcc": "../../output/stage_4/valid/ne_false.out",
+      "executableGcc": "../../output/stage_4/valid/ne_false.gcc.out"
+    },
+
+    {
+      "testCaseNumber": 14,
+      "inputFile": "../../input/stage_4/valid/ne_true.c",
+      "outputFileJcc": "../../output/stage_4/valid/ne_true.s",
+      "executableJcc": "../../output/stage_4/valid/ne_true.out",
+      "executableGcc": "../../output/stage_4/valid/ne_true.gcc.out"
+    },
+
+    {
+      "testCaseNumber": 15,
+      "inputFile": "../../input/stage_4/valid/or_false.c",
+      "outputFileJcc": "../../output/stage_4/valid/or_false.s",
+      "executableJcc": "../../output/stage_4/valid/or_false.out",
+      "executableGcc": "../../output/stage_4/valid/or_false.gcc.out"
+    },
+
+    {
+      "testCaseNumber": 16,
+      "inputFile": "../../input/stage_4/valid/or_true.c",
+      "outputFileJcc": "../../output/stage_4/valid/or_true.s",
+      "executableJcc": "../../output/stage_4/valid/or_true.out",
+      "executableGcc": "../../output/stage_4/valid/or_true.gcc.out"
+    },
+
+    {
+      "testCaseNumber": 17,
+      "inputFile": "../../input/stage_4/valid/precedence_2.c",
+      "outputFileJcc": "../../output/stage_4/valid/precedence_2.s",
+      "executableJcc": "../../output/stage_4/valid/precedence_2.out",
+      "executableGcc": "../../output/stage_4/valid/precedence_2.gcc.out"
+    },
+
+    {
+      "testCaseNumber": 18,
+      "inputFile": "../../input/stage_4/valid/precedence_3.c",
+      "outputFileJcc": "../../output/stage_4/valid/precedence_3.s",
+      "executableJcc": "../../output/stage_4/valid/precedence_3.out",
+      "executableGcc": "../../output/stage_4/valid/precedence_3.gcc.out"
+    },
+
+    {
+      "testCaseNumber": 19,
+      "inputFile": "../../input/stage_4/valid/precedence_4.c",
+      "outputFileJcc": "../../output/stage_4/valid/precedence_4.s",
+      "executableJcc": "../../output/stage_4/valid/precedence_4.out",
+      "executableGcc": "../../output/stage_4/valid/precedence_4.gcc.out"
+    },
+
+    {
+      "testCaseNumber": 20,
+      "inputFile": "../../input/stage_4/valid/precedence.c",
+      "outputFileJcc": "../../output/stage_4/valid/precedence.s",
+      "executableJcc": "../../output/stage_4/valid/precedence.out",
+      "executableGcc": "../../output/stage_4/valid/precedence.gcc.out"
+    }
   ]
 }
