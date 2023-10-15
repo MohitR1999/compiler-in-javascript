@@ -1,6 +1,4 @@
 const TokenTypes = require('../constants/tokenTypes');
-const fs = require('fs');
-const { exec } = require('child_process');
 
 /**
  * A simple label generator utility that returns a unique label
