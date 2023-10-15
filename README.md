@@ -24,7 +24,6 @@ To run this project follow these steps:
 - This project is not meant to be used in production, but rather as a learning tool.
 - It does not generate the binary executable, it just generates the assembly code. You need to use gcc/g++ to generate the binary executable.
 - To test the compiler against a fixed set of test cases, you can use the sample c programs present in input directory. A script test.py can also be used for running the tests
-- To run the tests, run ```python3 test.py <Test_numbers>``` from the root directory of the project
-- Example: ```python3 test.py 1 2 3``` will run the tests 1, 2 and 3
+- To run the tests, go to the ```src/tests``` directory and run the ```compiler.test.py``` script. This will run all the test cases that are defined in the ```testdata.json``` file in the ```tests``` directory
 - Test programs are inspired by [nlsandler](https://github.com/nlsandler)
 - This compiler generates x64 assembly code in AT&T syntax.
