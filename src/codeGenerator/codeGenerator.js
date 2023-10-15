@@ -13,35 +13,6 @@ function labelGenerator(seed) {
     return `_${seed}${random}`;
 }
 
-/**
- * This function generates the code from the AST generated after parsing the lexical tokens
- * @param {Object} abstractSyntaxTree The abstract syntax tree which is generated after
- * parsing the tokens
- */
-function codeGenerator(abstractSyntaxTree, fileName) {
-    let postOrderTraversal = [];
-    recursiveHelper(abstractSyntaxTree, postOrderTraversal);
-    const folderName = 'output';
-    try {
-        if (!fs.existsSync(`../${folderName}`)) {
-            fs.mkdirSync(`../${folderName}`);
-        }
-        fs.writeFileSync(`../${folderName}/${fileName}.s`, abstractSyntaxTree.assembly);
-        exec(`gcc ../${folderName}/${fileName}.s -o ../${folderName}/${fileName}.out`, (error, stdout, stderr) => {
-            if (error) {
-                console.log(`error: ${error.message}`);
-                return;
-            }
-            if (stderr) {
-                console.log(`stderr: ${stderr}`);
-                return;
-            }
-        });
-    } catch (err) {
-        console.log(err);
-    }
-}
-
 class CodeGenerator {
     /**
      * Takes an abstract syntax tree and generates assembly code
