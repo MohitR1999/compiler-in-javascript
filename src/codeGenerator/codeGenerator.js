@@ -356,6 +356,11 @@ class CodeGenerator {
         }
     }
 
+    /**
+     * This helper method recursively generates the assembly code from the AST 
+     * and attaches the assembly to each node
+     * @param {Object} node 
+     */
     recursiveHelper(node) {
         node.children.forEach(child => {
             this.recursiveHelper(child);
